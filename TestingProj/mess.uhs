@@ -1,0 +1,17 @@
+int global;
+const int fynal = 10;
+
+void messy(){
+
+}
+
+namespace boo{
+	void messier(){
+		::messy();
+		::messy();
+	}
+
+	int calc(){
+		return fynal + 1;
+	}
+};

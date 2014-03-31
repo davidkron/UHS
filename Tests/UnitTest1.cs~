@@ -1,0 +1,38 @@
+﻿using System;
+using Microsoft.VisualStudio.TestTools.UnitTesting;
+using Cycles;
+
+namespace Tests
+{
+    [TestClass]
+    public class UnitTest1
+    {
+        [TestMethod]
+        public void TestMethod1()
+        {
+            EnvDTE.DTE dte2 = (EnvDTE.DTE)System.Runtime.InteropServices.Marshal.
+            GetActiveObject("VisualStudio.DTE.12.0");
+
+
+            UHSFile uhs = new UHSFile("C:\\Users\\David\\Documents\\Visual Studio 2013\\Projects\\AdornmentTest\\TestingProj\\test.uhs",
+                "TestingProj",dte2);
+            
+            uhs.parse();
+        }
+
+	public void test(String fname)
+	{
+		EnvDTE.DTE dte2 = (EnvDTE.DTE)System.Runtime.InteropServices.Marshal.
+		GetActiveObject("VisualStudio.DTE.12.0");
+	}
+
+        [TestMethod]
+        public void TestEnum()
+        {
+            UHSFile uhs = new UHSFile("C:\\Users\\David\\Documents\\Visual Studio 2013\\Projects\\AdornmentTest\\TestingProj\\enum.uhs",
+                "TestingProj",dte2);
+            
+            uhs.parse();
+        }
+    }
+}

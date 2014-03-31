@@ -1,0 +1,22 @@
+class a{
+	class b{
+	public :
+		int foo(int i){
+			return i++;
+		}
+	};
+
+	class d : b{
+		void lol()
+		{
+			b u;
+
+			int i = 10;
+			for (i = 0; i < 100;)
+				i = u.foo(i);
+		}
+	};
+};
+
+
+
