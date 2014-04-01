@@ -59,13 +59,6 @@ using EnvDTE80;
                         throw new System.Exception("invalid type of parent: " + newelem.Kind);
                 }
             }
-            /*
-            static public implicit operator codeholder(VCCodeNamespace value)
-            { return new codeholder(value); }
-            static public implicit operator codeholder(VCFileCodeModel value)
-            { return new codeholder(value); }
-            static public implicit operator codeholder(VCCodeClass value)
-            { return new codeholder(value); }*/
 
             public VCCodeNamespace AddNamespace(string name)
             {
@@ -231,64 +224,6 @@ using EnvDTE80;
             {
                 System.Diagnostics.Debug.Assert(kind == holdkind.vcclass);
                 return data as VCCodeClass;
-            }
-
-            public void moveImplementation(VCCodeFunction oldfunc, ProjectItem source, VCCodeElement parent = null)
-            {
-                TextPoint start = null, end = null, namestart = null;
-                bool failed = true;
-
-                tryWhileFail.execute(() =>
-                {
-                    start = oldfunc.GetStartPoint(vsCMPart.vsCMPartBodyWithDelimiter);
-                    end = oldfunc.GetEndPoint(vsCMPart.vsCMPartBodyWithDelimiter);
-
-                    namestart = oldfunc.GetStartPoint();
-                });
-
-                string content = oldfunc.BodyText;
-                VCCodeFunction sourcefunction = null;
-                failed = true;
-
-                if (oldfunc.FunctionKind.HasFlag(vsCMFunction.vsCMFunctionConstructor) && parent != null && parent.Kind == vsCMElement.vsCMElementClass)
-                {
-                    sourcefunction = (parent as VCCodeClass).AddFunction(oldfunc.Name, vsCMFunction.vsCMFunctionConstructor, null, -1, oldfunc.Access, source.Name) as VCCodeFunction;
-                }
-                else
-                    sourcefunction = (source.FileCodeModel as VCFileCodeModel).AddFunction(oldfunc.FullName, oldfunc.FunctionKind, oldfunc.Type, -1, oldfunc.Access) as VCCodeFunction;
-                failed = false;
-
-
-                foreach (VCCodeParameter param in oldfunc.Parameters)
-                {
-                    sourcefunction.AddParameter(param.Name, param.Type, -1);
-                }
-
-                foreach (VCCodeParameter param in oldfunc.TemplateParameters)
-                {
-                    sourcefunction.AddTemplateParameter(param.Name, param.Type, -1);
-                }
-
-                sourcefunction.BodyText = content;
-
-                EditPoint implementation = start.CreateEditPoint();
-                implementation.Delete(end);
-                implementation.Insert(";");
-
-                /*if (oldfunc.Parent == null || oldfunc.Parent as CodeClass == null)
-                {
-                    failed = true;
-                    while (failed)
-                    {
-                        try
-                        {
-                            namestart.CreateEditPoint().Insert("extern ");
-                            failed = false;
-                        }
-                        catch (System.Exception e)
-                        { }
-                    }
-                }*/
             }
         }
     }

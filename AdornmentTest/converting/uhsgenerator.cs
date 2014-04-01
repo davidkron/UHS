@@ -27,27 +27,6 @@ namespace Cycles
             this.project = project;
         }
 
-        void AddClass(VCCodeClass cs, CodeHolder target, VCFileCodeModel source)
-        {
-            var parent = target.AddClass(cs.Name, cs.Access, cs.Bases.Count > 0 ? cs.Bases : null, cs.ImplementedInterfaces.Count > 0 ? cs.ImplementedInterfaces : null);
-        }
-
-        void AddNamespace(VCCodeNamespace ns, CodeHolder target, VCFileCodeModel source)
-        {
-            VCCodeNamespace parent = target.AddNamespace(ns.Name);
-
-            foreach (VCCodeClass cs in parent.Classes)
-            {
-                AddClass(cs, new CodeHolder(parent), source);
-            }
-
-            foreach (VCCodeFunction f in parent.Functions)
-            {
-                parent.AddFunction(f.Name, f.FunctionKind, f.Type, -1, f.Access);
-                //parent.AddFunction(f.Name, f.FunctionKind, f.Type, -1, f.Access, source.Parent.Name);
-            }
-        }
-
         public void convert(VCFile file)
         {
             converting = true;
@@ -104,8 +83,6 @@ namespace Cycles
             //Reopen docs
             if (hOpen) header.Open();
             if (sOpen) source.Open();
-            //Move implementations to cpp
-            //add declaring keywords (extend etc)
         }
 
         
