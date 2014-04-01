@@ -1,7 +1,7 @@
 int global;
 const int fynal;
 
-extern void messy();
+void messy();
 
 namespace boo
 {

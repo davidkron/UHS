@@ -11,7 +11,7 @@ namespace Tests
 	{
 		EnvDTE.DTE dte2 = (EnvDTE.DTE)System.Runtime.InteropServices.Marshal.
 		GetActiveObject("VisualStudio.DTE.12.0");
-		UHSFile uhs = new UHSFile("C:\\Users\\David\\Dropbox\\LaptopBackup\\Projects\\AdornmentTest\\TestingProj\\" + fname,
+        UHSFile uhs = new UHSFile("C:\\Users\\David\\Dropbox\\programmering\\uhs\\UHSAdorment\\TestingProj\\" + fname,
                 "TestingProj",dte2);
 		uhs.parse();
 	}

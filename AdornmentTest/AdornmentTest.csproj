@@ -83,13 +83,13 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="AdornmentTestFactory.cs" />
-    <Compile Include="CodeHolder.cs" />
+    <Compile Include="converting\CodeHolder.cs" />
     <Compile Include="ProjectHolder.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="DocumentHook.cs" />
     <Compile Include="tryWhileFail.cs" />
-    <Compile Include="UHSFile.cs" />
-    <Compile Include="uhsgenerator.cs" />
+    <Compile Include="converting\UHSFile.cs" />
+    <Compile Include="converting\uhsgenerator.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="source.extension.vsixmanifest">
