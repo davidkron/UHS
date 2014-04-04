@@ -1,5 +1,6 @@
 ﻿using EnvDTE;
 using Microsoft.VisualStudio.VCCodeModel;
+using Microsoft.VisualStudio.VCProjectEngine;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -42,7 +43,10 @@ namespace Cycles.converting
                 sourcefunction.AddTemplateParameter(param.Name, param.Type, -1);
             }
 
-            sourcefunction.BodyText = content;
+            tryWhileFail.execute(() =>
+            {
+                sourcefunction.BodyText = content;
+            });
 
             EditPoint implementation = start.CreateEditPoint();
             implementation.Delete(end);
@@ -60,7 +64,7 @@ namespace Cycles.converting
 
         public static void moveImplementation(VCCodeVariable v, ProjectItem sourcetarget)
         {
-            var v2 = (sourcetarget.FileCodeModel as VCFileCodeModel).AddVariable(v.Name, v.Type, -1, v.Access);
+            var v2 = (sourcetarget as VCFileCodeModel).AddVariable(v.Name, v.Type, -1, v.Access);
             addExtern((VCCodeElement)v2);
         }
     }

@@ -77,6 +77,7 @@ namespace Cycles
                 uhsconverter.parseitem(el, source, new CodeHolder(header.FileCodeModel as VCFileCodeModel));
             }
 
+            (header.FileCodeModel as VCFileCodeModel).StartPoint.CreateEditPoint().Insert("#pragma once\r\n");
             (source.FileCodeModel as VCFileCodeModel).AddInclude("\"" + header.Name + "\"");
             
 

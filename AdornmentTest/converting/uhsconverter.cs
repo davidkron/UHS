@@ -20,7 +20,6 @@ namespace Cycles.converting
             {
                 case vsCMElement.vsCMElementFunction:
                     VCCodeFunction func = elem as VCCodeFunction;
-
                     newelem = headertarget.AddFunction(func.Name, func.FunctionKind, func.Type, func.Access, sourcetarget.Name) as VCCodeElement;
                     (newelem as VCCodeFunction).BodyText = func.BodyText;
                     foreach (VCCodeAttribute attrib in func.Attributes)
@@ -52,7 +51,7 @@ namespace Cycles.converting
                     //v2.InitExpression = v.InitExpression;
                     if (headertarget.kind == CodeHolder.holdkind.vcfile)
                     {
-                        VCCodeVariable sourceVar = (sourcetarget.FileCodeModel as VCFileCodeModel).AddVariable(v.Name, v.Type, 0, v.Access) as VCCodeVariable;
+                        VCCodeVariable sourceVar = (sourcetarget.FileCodeModel as VCFileCodeModel).AddVariable(v.Name, v.Type, -1, v.Access) as VCCodeVariable;
                         ImplementationMover.addExtern((VCCodeElement)headerVar);
                         sourceVar.InitExpression = v.InitExpression;
                     }
