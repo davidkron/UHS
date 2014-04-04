@@ -7,6 +7,7 @@ using System.Threading.Tasks;
     using EnvDTE;
     using Microsoft.VisualStudio.VCCodeModel;
 using EnvDTE80;
+using Cycles.converting;
 
 
     namespace Cycles

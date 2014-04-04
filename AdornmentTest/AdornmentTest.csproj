@@ -84,6 +84,8 @@
   <ItemGroup>
     <Compile Include="AdornmentTestFactory.cs" />
     <Compile Include="converting\CodeHolder.cs" />
+    <Compile Include="converting\ImplementationMover.cs" />
+    <Compile Include="converting\uhsconverter.cs" />
     <Compile Include="ProjectHolder.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="DocumentHook.cs" />

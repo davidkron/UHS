@@ -65,6 +65,7 @@ namespace Cycles
                 vcsource = source.FileCodeModel as VCFileCodeModel;
             });
 
+            
             System.Collections.IEnumerator num = null;
             tryWhileFail.execute(() =>
             {
@@ -75,9 +76,17 @@ namespace Cycles
                 VCCodeElement el = num.Current as VCCodeElement;
                 uhsconverter.parseitem(el, source, new CodeHolder(header.FileCodeModel as VCFileCodeModel));
             }
+
+            (source.FileCodeModel as VCFileCodeModel).AddInclude("\"" + header.Name + "\"");
             
+
             project.dteproj.Save();
 
+            //tryWhileFail.execute(()=>{
+            //if ((source.FileCodeModel as VCFileCodeModel).Includes.Count == 0)
+            
+                //(source.FileCodeModel as VCFileCodeModel).StartPoint.CreateEditPoint().Insert("#include \"" + header.Name + "\""); 
+            //});
             converting = false;
             
             //Reopen docs

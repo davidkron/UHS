@@ -13,7 +13,6 @@ namespace Cycles.converting
         public static void moveImplementation(VCCodeFunction oldfunc, ProjectItem source, VCCodeElement parent = null)
         {
             TextPoint start = null, end = null, namestart = null;
-            bool failed = true;
 
             tryWhileFail.execute(() =>
             {
@@ -25,17 +24,14 @@ namespace Cycles.converting
 
             string content = oldfunc.BodyText;
             VCCodeFunction sourcefunction = null;
-            failed = true;
-
+            
             if (oldfunc.FunctionKind.HasFlag(vsCMFunction.vsCMFunctionConstructor) && parent != null && parent.Kind == vsCMElement.vsCMElementClass)
             {
                 sourcefunction = (parent as VCCodeClass).AddFunction(oldfunc.Name, vsCMFunction.vsCMFunctionConstructor, null, -1, oldfunc.Access, source.Name) as VCCodeFunction;
             }
             else
                 sourcefunction = (source.FileCodeModel as VCFileCodeModel).AddFunction(oldfunc.FullName, oldfunc.FunctionKind, oldfunc.Type, -1, oldfunc.Access) as VCCodeFunction;
-            failed = false;
-
-
+            
             foreach (VCCodeParameter param in oldfunc.Parameters)
             {
                 sourcefunction.AddParameter(param.Name, param.Type, -1);
@@ -52,20 +48,20 @@ namespace Cycles.converting
             implementation.Delete(end);
             implementation.Insert(";");
 
-            /*if (oldfunc.Parent == null || oldfunc.Parent as CodeClass == null)
-            {
-                failed = true;
-                while (failed)
-                {
-                    try
-                    {
-                        namestart.CreateEditPoint().Insert("extern ");
-                        failed = false;
-                    }
-                    catch (System.Exception e)
-                    { }
-                }
-            }*/
+            string uhs = oldfunc.ProjectItem.Name;
+            string header = uhs.Remove(uhs.Length - 2) + ".h";
+            //(source.FileCodeModel as VCFileCodeModel).AddInclude(header);
+        }
+
+        public static void addExtern(VCCodeElement elem)
+        {
+                elem.GetStartPoint().CreateEditPoint().Insert("extern ");
+        }
+
+        public static void moveImplementation(VCCodeVariable v, ProjectItem sourcetarget)
+        {
+            var v2 = (sourcetarget.FileCodeModel as VCFileCodeModel).AddVariable(v.Name, v.Type, -1, v.Access);
+            addExtern((VCCodeElement)v2);
         }
     }
 }

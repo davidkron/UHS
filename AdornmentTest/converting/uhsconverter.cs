@@ -11,6 +11,7 @@ namespace Cycles.converting
     class uhsconverter
     {
         //Parses uhs items and generates both headers and source items
+
         public static void parseitem(VCCodeElement elem, ProjectItem sourcetarget, CodeHolder headertarget)
         {
             VCCodeElement newelem = null;
@@ -26,9 +27,9 @@ namespace Cycles.converting
                         (newelem as VCCodeFunction).AddAttribute(attrib.Name, attrib.Value);
                     foreach (VCCodeParameter param in func.Parameters)
                         (newelem as VCCodeFunction).AddParameter(param.Name, param.Type);
-                    if (headertarget.kind == CodeHolder.holdkind.vcfile)
+                    if (headertarget.kind != CodeHolder.holdkind.vcclass)
                     {
-                        headertarget.moveImplementation(newelem as VCCodeFunction, sourcetarget);
+                        ImplementationMover.moveImplementation(newelem as VCCodeFunction, sourcetarget);
                     }
 
                     break;
@@ -47,8 +48,19 @@ namespace Cycles.converting
 
                 case vsCMElement.vsCMElementVariable:
                     VCCodeVariable v = elem as VCCodeVariable;
-                    VCCodeVariable v2 = headertarget.AddVariable(v.Name, v.Type, v.Access, sourcetarget.Name, v.IsShared, v.IsConstant);
-
+                    VCCodeVariable headerVar = headertarget.AddVariable(v.Name, v.Type, v.Access, sourcetarget.Name, v.IsShared, v.IsConstant);
+                    //v2.InitExpression = v.InitExpression;
+                    if (headertarget.kind == CodeHolder.holdkind.vcfile)
+                    {
+                        VCCodeVariable sourceVar = (sourcetarget.FileCodeModel as VCFileCodeModel).AddVariable(v.Name, v.Type, 0, v.Access) as VCCodeVariable;
+                        ImplementationMover.addExtern((VCCodeElement)headerVar);
+                        sourceVar.InitExpression = v.InitExpression;
+                    }
+                    else
+                    {
+                        headerVar.InitExpression = v.InitExpression;
+                    }
+                    
                     break;
 
                 case vsCMElement.vsCMElementVCBase:
