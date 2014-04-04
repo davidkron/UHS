@@ -79,7 +79,6 @@ namespace Cycles
 
             (header.FileCodeModel as VCFileCodeModel).StartPoint.CreateEditPoint().Insert("#pragma once\r\n");
             (source.FileCodeModel as VCFileCodeModel).AddInclude("\"" + header.Name + "\"");
-            
 
             project.dteproj.Save();
 
