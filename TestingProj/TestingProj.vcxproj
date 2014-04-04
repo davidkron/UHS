@@ -79,11 +79,13 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <None Include="enum.uhs" />
+    <None Include="main.uhs" />
     <None Include="mess.uhs" />
     <None Include="test.uhs" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="enum.h" />
+    <ClInclude Include="main.h" />
     <ClInclude Include="mess.h" />
     <ClInclude Include="test.h" />
   </ItemGroup>

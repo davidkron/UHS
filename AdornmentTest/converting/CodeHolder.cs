@@ -226,5 +226,19 @@ using Cycles.converting;
                 System.Diagnostics.Debug.Assert(kind == holdkind.vcclass);
                 return data as VCCodeClass;
             }
+
+            internal VCCodeElement addInclude(VCCodeInclude vCCodeInclude)
+            {
+                System.Diagnostics.Debug.Assert(kind == holdkind.vcfile);
+                return (VCCodeElement)(data as VCFileCodeModel).AddInclude(vCCodeInclude.DisplayName);
+            }
+
+            internal VCCodeElement addMacro(VCCodeMacro macro)
+            {
+                System.Diagnostics.Debug.Assert(kind == holdkind.vcfile);
+                string smacro = macro.StartPoint.CreateEditPoint().GetText(macro.EndPoint); 
+                String value = smacro.Substring(macro.Name.Count() + "#define  ".Count()) + "\n";
+                return (VCCodeElement)(data as VCFileCodeModel).AddMacro(macro.Name, value, -1);
+            }
         }
     }

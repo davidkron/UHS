@@ -33,5 +33,11 @@ namespace Tests
         {
             test("mess.uhs");
         }
+
+        [TestMethod]
+        public void MacroTestHelloWorld()
+        {
+            test("main.uhs");
+        }
     }
 }

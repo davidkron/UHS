@@ -27,6 +27,9 @@
     <ClInclude Include="mess.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="main.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="test.cpp">
@@ -50,6 +53,9 @@
       <Filter>Unified Files</Filter>
     </None>
     <None Include="mess.uhs">
+      <Filter>Unified Files</Filter>
+    </None>
+    <None Include="main.uhs">
       <Filter>Unified Files</Filter>
     </None>
   </ItemGroup>

@@ -69,7 +69,10 @@ namespace Cycles.converting
                     headertarget.getClass().AddBase(_base.DisplayName, -1);
                     break;
                 case vsCMElement.vsCMElementIncludeStmt:
-                    newelem = (VCCodeElement)(sourcetarget.FileCodeModel as VCFileCodeModel).AddInclude((elem as VCCodeInclude).DisplayName);
+                    newelem = headertarget.addInclude(elem as VCCodeInclude);
+                    break;
+                case vsCMElement.vsCMElementMacro:
+                    newelem = headertarget.addMacro(elem as VCCodeMacro);
                     break;
                 case vsCMElement.vsCMElementEnum:
                     newelem = (VCCodeElement)headertarget.AddEnum(elem as VCCodeEnum);

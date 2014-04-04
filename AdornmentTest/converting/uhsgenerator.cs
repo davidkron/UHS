@@ -57,7 +57,7 @@ namespace Cycles
             });
             
             EnvDTE.ProjectItem uhsfile = file.Object as ProjectItem;
-            VCFileCodeModel vcfile = null, vcheader, vcsource;
+            VCFileCodeModel vcfile = null, vcheader = null, vcsource = null;
             tryWhileFail.execute(() =>
             {
                 vcfile = uhsfile.FileCodeModel as VCFileCodeModel;
@@ -77,8 +77,17 @@ namespace Cycles
                 uhsconverter.parseitem(el, source, new CodeHolder(header.FileCodeModel as VCFileCodeModel));
             }
 
-            (header.FileCodeModel as VCFileCodeModel).StartPoint.CreateEditPoint().Insert("#pragma once\r\n");
-            (source.FileCodeModel as VCFileCodeModel).AddInclude("\"" + header.Name + "\"");
+            vcheader.StartPoint.CreateEditPoint().Insert("#pragma once\r\n");
+            bool hasHeader = false;
+            foreach(VCCodeInclude inc in vcsource.Includes)
+            {
+                if (inc.Name == header.Name)
+                {
+                    hasHeader = true; break;
+                }
+            }
+            if(!hasHeader)
+                vcsource.AddInclude("\"" + header.Name + "\"");
 
             project.dteproj.Save();
 

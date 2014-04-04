@@ -1,0 +1,11 @@
+#include <iostream>
+
+#define PRINTHELLO std::cout HELLOWORLD
+
+#define HELLOWORLD <<"Hello World"<<std::endl
+
+int main(){
+	PRINTHELLO;
+	std::cin.get();
+	return 0;
+}

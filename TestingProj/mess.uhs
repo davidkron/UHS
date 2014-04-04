@@ -4,6 +4,9 @@ const int fynal = 10;
 void messy(){
 
 }
+class lol{
+
+};
 
 namespace boo{
 	void messier(){
