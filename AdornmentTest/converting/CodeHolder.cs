@@ -10,7 +10,7 @@ using EnvDTE80;
 using Cycles.converting;
 
 
-    namespace Cycles
+    namespace Cycles.converting
     {
         public class CodeHolder
         {
@@ -166,7 +166,7 @@ using Cycles.converting;
                 }
             }
 
-            public CodeElements Classes
+            /*public CodeElements Classes
             {
                 get
                 {
@@ -219,7 +219,7 @@ using Cycles.converting;
                             throw new System.Exception("unknown kind");
                     }
                 }
-            }
+            }*/
 
             internal VCCodeClass getClass()
             {

@@ -1,0 +1,8 @@
+namespace nspace{
+	namespace nspace2{
+		int orgh;
+	};
+	class namespaceclass{
+
+	};
+};

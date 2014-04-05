@@ -30,6 +30,12 @@
     <ClInclude Include="main.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="namespace.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="classes.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="test.cpp">
@@ -44,6 +50,12 @@
     <ClCompile Include="mess.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="namespace.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="classes.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <None Include="test.uhs">
@@ -56,6 +68,12 @@
       <Filter>Unified Files</Filter>
     </None>
     <None Include="main.uhs">
+      <Filter>Unified Files</Filter>
+    </None>
+    <None Include="namespace.uhs">
+      <Filter>Unified Files</Filter>
+    </None>
+    <None Include="classes.uhs">
       <Filter>Unified Files</Filter>
     </None>
   </ItemGroup>

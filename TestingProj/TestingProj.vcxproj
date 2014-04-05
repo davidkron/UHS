@@ -53,11 +53,15 @@
       <Optimization>Disabled</Optimization>
       <PreprocessorDefinitions>WIN32;_DEBUG;_CONSOLE;_LIB;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <SDLCheck>true</SDLCheck>
+      <BrowseInformation>true</BrowseInformation>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
     </Link>
+    <Bscmake>
+      <PreserveSbr>true</PreserveSbr>
+    </Bscmake>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <ClCompile>
@@ -78,21 +82,27 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <None Include="classes.uhs" />
     <None Include="enum.uhs" />
     <None Include="main.uhs" />
     <None Include="mess.uhs" />
+    <None Include="namespace.uhs" />
     <None Include="test.uhs" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="classes.h" />
     <ClInclude Include="enum.h" />
     <ClInclude Include="main.h" />
     <ClInclude Include="mess.h" />
+    <ClInclude Include="namespace.h" />
     <ClInclude Include="test.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="classes.cpp" />
     <ClCompile Include="enum.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="mess.cpp" />
+    <ClCompile Include="namespace.cpp" />
     <ClCompile Include="test.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

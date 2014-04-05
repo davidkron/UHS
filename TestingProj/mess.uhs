@@ -9,6 +9,9 @@ class lol{
 };
 
 namespace boo{
+	class urg{
+
+	};
 	void messier(){
 		::messy();
 		::messy();

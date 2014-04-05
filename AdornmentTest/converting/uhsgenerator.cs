@@ -47,9 +47,11 @@ namespace Cycles
                 header.Document.Close();
             if (sOpen)
                 source.Document.Close();
-            
+
             System.IO.File.WriteAllText(h.FullPath, String.Empty);
+            (header.FileCodeModel as VCFileCodeModel).Synchronize();
             System.IO.File.WriteAllText(s.FullPath, String.Empty);
+            (source.FileCodeModel as VCFileCodeModel).Synchronize();
             
             tryWhileFail.execute(()=>{
             project.proj.Save();

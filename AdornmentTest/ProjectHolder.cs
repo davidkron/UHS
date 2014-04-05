@@ -20,7 +20,12 @@ namespace Cycles
 
 	    public ProjectHolder(EnvDTE80.DTE2 enviro)
 	    {
-            load((EnvDTE.Project)enviro.ActiveSolutionProjects[0]);
+            EnvDTE.Project proj = null;
+            tryWhileFail.execute(() =>
+            {
+                proj = (EnvDTE.Project)enviro.ActiveSolutionProjects[0];
+            });
+            load(proj);
 	    }
 
         internal void load(EnvDTE.Project dteproj)

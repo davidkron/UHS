@@ -1,0 +1,13 @@
+class a{
+protected:
+	int haha;
+	virtual void foo(){
+		haha = 10;
+	}
+};
+
+class b : a{
+	void foo(){
+		haha = 20;
+	}
+};

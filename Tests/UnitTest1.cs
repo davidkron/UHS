@@ -35,9 +35,20 @@ namespace Tests
         }
 
         [TestMethod]
+        public void NamespaceTest()
+        {
+            test("namespace.uhs");
+        }
+
+        [TestMethod]
         public void MacroTestHelloWorld()
         {
             test("main.uhs");
+        }
+        [TestMethod]
+        public void Classtest()
+        {
+            test("classes.uhs");
         }
     }
 }

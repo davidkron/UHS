@@ -25,7 +25,7 @@ namespace Cycles.converting
                     foreach (VCCodeAttribute attrib in func.Attributes)
                         (newelem as VCCodeFunction).AddAttribute(attrib.Name, attrib.Value);
                     foreach (VCCodeParameter param in func.Parameters)
-                        (newelem as VCCodeFunction).AddParameter(param.Name, param.Type);
+                        (newelem as VCCodeFunction).AddParameter(param.Name, param.Type,-1);
                     if (headertarget.kind != CodeHolder.holdkind.vcclass)
                     {
                         ImplementationMover.moveImplementation(newelem as VCCodeFunction, sourcetarget);

@@ -2,15 +2,20 @@ enum count{
 	one,two,three,four,five
 };
 
-enum counts{
-	ones = 1,twos = 2,threes = 3,fours = 4,fives = 5
+namespace multiple{
+	enum counts{
+		ones = 1, twos = 2, threes = 3, fours = 4, fives = 5
+	};
 };
 
 class class0{
+	[[deprecated]]
+	enum classenum{
+		yay,yayay,yayayay
+	};
 	count myCount;
 	class0(){
 		myCount = count::two;
 	}
 }
-
 

@@ -26,7 +26,7 @@ namespace Cycles
                 catch (System.Exception e)
                 {
                     if (tries >= MAXTRIES)
-                        throw e;
+                        throw;
                     System.Diagnostics.Debug.WriteLine(e);
                 }
             }

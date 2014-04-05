@@ -30,6 +30,7 @@ using Microsoft.VisualStudio.VCProjectEngine;
         public UHSFile(ITextDocument doc,EnvDTE.DTE dte)
         {
             project = new ProjectHolder((EnvDTE80.DTE2)dte);
+            
             generator = new UHSGenerator(project);
             load(doc.FilePath);
         }
@@ -37,7 +38,14 @@ using Microsoft.VisualStudio.VCProjectEngine;
         public void parse()
         {
             if (!generator.converting)
+            try
+            {
                 generator.convert(uhs);
+            }
+            catch(Exception e)
+            {
+                generator.converting = false;
+            }
         }
 
         public void load(string filename)
@@ -49,6 +57,10 @@ using Microsoft.VisualStudio.VCProjectEngine;
 
             if (!hasfiles)
             {
+                string filter = (uhs.Parent as VCProjectItem).ItemName;
+                if (filter == "Source Files" || filter == "Header Files")
+                    uhs.Move(project.unifiles);
+
                 //AddObjectsFilter(ref currentproject);
                 string headerpath = dir + "\\" + rawfname + ".h";
                 string sourcepath = dir + "\\" + rawfname + ".cpp";

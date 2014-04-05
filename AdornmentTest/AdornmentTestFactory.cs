@@ -41,7 +41,7 @@ namespace Cycles
             if (TextDocumentFactoryService.TryGetTextDocument(textView.TextDataModel.DocumentBuffer, out document))
             {
                 System.Diagnostics.Debug.WriteLine(document.FilePath);
-                if(document.FilePath.EndsWith("ths"))
+                if(document.FilePath.EndsWith("uhs"))
                 {
                     DTE dte = (DTE)ServiceProvider.GetService(typeof(DTE));
                     new DocumentHook(textView,document,dte);
