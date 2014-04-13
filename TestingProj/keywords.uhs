@@ -1,0 +1,17 @@
+static int boo = 10;
+
+struct obj{
+protected:
+	virtual void foo(){
+
+	}
+};
+
+template<typename T>
+class d : virtual obj{
+	static const int stat = 10;
+	volatile T* myT;
+	static inline float calc(){
+		return 1.1f;
+	}
+};
