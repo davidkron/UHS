@@ -6,6 +6,7 @@ using EnvDTE;
 using EnvDTE80;
 using Microsoft.VisualStudio.Shell;
 
+[assembly: System.CLSCompliant(true)]
 namespace Cycles
 {
     #region Adornment Factory
@@ -41,7 +42,7 @@ namespace Cycles
             if (TextDocumentFactoryService.TryGetTextDocument(textView.TextDataModel.DocumentBuffer, out document))
             {
                 System.Diagnostics.Debug.WriteLine(document.FilePath);
-                if(document.FilePath.EndsWith("uhs"))
+                if(document.FilePath.EndsWith("uhs",System.StringComparison.OrdinalIgnoreCase))
                 {
                     DTE dte = (DTE)ServiceProvider.GetService(typeof(DTE));
                     new DocumentHook(textView,document,dte);

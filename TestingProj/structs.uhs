@@ -1,0 +1,5 @@
+struct st{
+	void foo(){
+		int a = 100;
+	}
+};

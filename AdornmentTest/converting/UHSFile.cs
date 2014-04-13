@@ -38,14 +38,14 @@ using Microsoft.VisualStudio.VCProjectEngine;
         public void parse()
         {
             if (!generator.converting)
-            try
+            //try
             {
                 generator.convert(uhs);
             }
-            catch(Exception e)
+            /*catch(Exception e)
             {
                 generator.converting = false;
-            }
+            }*/
         }
 
         public void load(string filename)

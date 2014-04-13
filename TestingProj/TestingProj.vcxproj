@@ -84,25 +84,31 @@
   <ItemGroup>
     <None Include="classes.uhs" />
     <None Include="enum.uhs" />
+    <None Include="keywords.uhs" />
     <None Include="main.uhs" />
     <None Include="mess.uhs" />
     <None Include="namespace.uhs" />
+    <None Include="structs.uhs" />
     <None Include="test.uhs" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="classes.h" />
     <ClInclude Include="enum.h" />
+    <ClInclude Include="keywords.h" />
     <ClInclude Include="main.h" />
     <ClInclude Include="mess.h" />
     <ClInclude Include="namespace.h" />
+    <ClInclude Include="structs.h" />
     <ClInclude Include="test.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="classes.cpp" />
     <ClCompile Include="enum.cpp" />
+    <ClCompile Include="keywords.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="mess.cpp" />
     <ClCompile Include="namespace.cpp" />
+    <ClCompile Include="structs.cpp" />
     <ClCompile Include="test.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

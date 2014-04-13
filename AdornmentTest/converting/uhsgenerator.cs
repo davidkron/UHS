@@ -8,7 +8,7 @@ using EnvDTE;
 using Microsoft.VisualStudio.VCCodeModel;
 using Microsoft.VisualStudio.VCProjectEngine;
 using Cycles;
-using Cycles.converting;
+using Cycles.Converting;
 
 namespace Cycles
 {
@@ -52,11 +52,13 @@ namespace Cycles
             (header.FileCodeModel as VCFileCodeModel).Synchronize();
             System.IO.File.WriteAllText(s.FullPath, String.Empty);
             (source.FileCodeModel as VCFileCodeModel).Synchronize();
+            (source.FileCodeModel as VCFileCodeModel).StartPoint.CreateEditPoint().Delete(
+               (source.FileCodeModel as VCFileCodeModel).EndPoint);
             
             tryWhileFail.execute(()=>{
             project.proj.Save();
             project.dteproj.Save();
-            });
+            },false);
             
             EnvDTE.ProjectItem uhsfile = file.Object as ProjectItem;
             VCFileCodeModel vcfile = null, vcheader = null, vcsource = null;

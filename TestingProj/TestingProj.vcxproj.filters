@@ -36,6 +36,12 @@
     <ClInclude Include="classes.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="keywords.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="structs.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="test.cpp">
@@ -56,6 +62,12 @@
     <ClCompile Include="classes.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="keywords.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="structs.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <None Include="test.uhs">
@@ -74,6 +86,12 @@
       <Filter>Unified Files</Filter>
     </None>
     <None Include="classes.uhs">
+      <Filter>Unified Files</Filter>
+    </None>
+    <None Include="keywords.uhs">
+      <Filter>Unified Files</Filter>
+    </None>
+    <None Include="structs.uhs">
       <Filter>Unified Files</Filter>
     </None>
   </ItemGroup>

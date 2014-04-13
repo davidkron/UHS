@@ -7,57 +7,49 @@ using System.Threading.Tasks;
     using EnvDTE;
     using Microsoft.VisualStudio.VCCodeModel;
 using EnvDTE80;
-using Cycles.converting;
+using Cycles.Converting;
 
 
-    namespace Cycles.converting
+    namespace Cycles.Converting
     {
         public class CodeHolder
         {
             object data;
 
-            public enum holdkind
+            public enum Holdkind
             {
-                vcclass, vcfile, vcnamespace,
-                vcfunction
+                VCClass, VCFile, VCNamespace,
+                VCFunction,
+                VCStruct
             }
 
-            public holdkind kind;
+            public Holdkind kind;
 
-            public CodeHolder(VCCodeNamespace ns)
+            public CodeHolder(VCFileCodeModel VCFile)
             {
-                kind = holdkind.vcnamespace;
-                data = ns;
+                kind = Holdkind.VCFile;
+                data = VCFile;
             }
 
-            public CodeHolder(VCFileCodeModel fm)
+            public CodeHolder(VCCodeElement NewElem)
             {
-                kind = holdkind.vcfile;
-                data = fm;
-            }
-
-            public CodeHolder(VCCodeClass cs)
-            {
-                kind = holdkind.vcclass;
-                data = cs;
-            }
-
-            public CodeHolder(VCCodeElement newelem)
-            {
-                data = newelem;
-                switch (newelem.Kind)
+                data = NewElem;
+                switch (NewElem.Kind)
                 {
                     case vsCMElement.vsCMElementClass:
-                        kind = holdkind.vcclass;
+                        kind = Holdkind.VCClass;
+                        break;
+                    case vsCMElement.vsCMElementStruct:
+                        kind = Holdkind.VCStruct;
                         break;
                     case vsCMElement.vsCMElementNamespace:
-                        kind = holdkind.vcnamespace;
+                        kind = Holdkind.VCNamespace;
                         break;
                     case vsCMElement.vsCMElementFunction:
-                        kind = holdkind.vcfunction;
+                        kind = Holdkind.VCFunction;
                         break;
                     default:
-                        throw new System.Exception("invalid type of parent: " + newelem.Kind);
+                        throw new System.ArgumentException("invalid type of parent: " + NewElem.Kind);
                 }
             }
 
@@ -65,14 +57,14 @@ using Cycles.converting;
             {
                 switch (kind)
                 {
-                    case holdkind.vcclass:
-                        throw new System.Exception("Class cant contain namespace");
-                    case holdkind.vcfile:
+                    case Holdkind.VCClass:
+                        throw new System.ArgumentException("Class cant contain namespace");
+                    case Holdkind.VCFile:
                         return (data as VCFileCodeModel).AddNamespace(name, -1) as VCCodeNamespace;
-                    case holdkind.vcnamespace:
+                    case Holdkind.VCNamespace:
                         return (data as VCCodeNamespace).AddNamespace(name, -1) as VCCodeNamespace;
                     default:
-                        throw new System.Exception("unknown kind");
+                        throw new System.NotImplementedException("unknown kind");
                 }
             }
 
@@ -82,13 +74,16 @@ using Cycles.converting;
                 VCCodeEnum enm;
                 switch (kind)
                 {
-                    case holdkind.vcclass:
+                    case Holdkind.VCStruct:
+                        enm = (data as VCCodeStruct).AddEnum(oldEnum.Name, -1, oldEnum.Bases, oldEnum.Access) as VCCodeEnum;
+                        break;
+                    case Holdkind.VCClass:
                         enm = (data as VCCodeClass).AddEnum(oldEnum.Name, -1, oldEnum.Bases, oldEnum.Access) as VCCodeEnum;
                         break;
-                    case holdkind.vcfile:
+                    case Holdkind.VCFile:
                         enm = (data as VCFileCodeModel).AddEnum(oldEnum.Name, -1, oldEnum.Bases, oldEnum.Access) as VCCodeEnum;
                         break;
-                    case holdkind.vcnamespace:
+                    case Holdkind.VCNamespace:
                         enm = (data as VCCodeNamespace).AddEnum(oldEnum.Name, -1, oldEnum.Bases, oldEnum.Access) as VCCodeEnum;
                         break;
                     default:
@@ -101,36 +96,27 @@ using Cycles.converting;
                 return oldEnum;
             }
 
-            public VCCodeVariable AddVariable(string Name, object Type, vsCMAccess Access, string location, bool isstatic, bool constant)
+            public VCCodeVariable AddVariable(string Name, object Type, vsCMAccess Access, string Location, bool isstatic, bool constant)
             {
                 if (!isstatic)
-                    location = null;
+                    Location = null;
 
                 VCCodeVariable var;
                 switch (kind)
                 {
-                    case holdkind.vcclass:
-                        var = (data as VCCodeClass).AddVariable(Name, Type, -1, Access, location) as VCCodeVariable;
+                    case Holdkind.VCClass:
+                        var = (data as VCCodeClass).AddVariable(Name, Type, -1, Access, Location) as VCCodeVariable;
                         break;
-                    case holdkind.vcfile:
+                    case Holdkind.VCFile:
                         var = (data as VCFileCodeModel).AddVariable(Name, Type, -1, Access) as VCCodeVariable;
                         break;
-                    case holdkind.vcnamespace:
+                    case Holdkind.VCNamespace:
                         var = (data as VCCodeNamespace).AddVariable(Name, Type, -1, Access) as VCCodeVariable;
                         break;
                     default:
-                        throw new System.Exception("unknown kind");
+                        throw new System.NotSupportedException("unknown kind");
                 }
-                try
-                {
-                    //var.IsShared = isstatic;
 
-                }
-                catch (System.Exception e)
-                {
-                    //int erro = Marshal.GetLastWin32Error();
-                    //System.Diagnostics.Debug.WriteLine(erro);
-                }
                 var.IsConstant = constant;
                 return var;
             }
@@ -139,106 +125,74 @@ using Cycles.converting;
             {
                 switch (kind)
                 {
-                    case holdkind.vcclass:
+                    case Holdkind.VCClass:
                         functionkind &= ~vsCMFunction.vsCMFunctionInline;
                         return (data as VCCodeClass).AddFunction(Name, functionkind, Type, -1, Access, location) as VCCodeFunction;
-                    case holdkind.vcfile:
+                    case Holdkind.VCStruct:
+                        functionkind &= ~vsCMFunction.vsCMFunctionInline;
+                        return (data as VCCodeStruct).AddFunction(Name, functionkind, Type, -1, Access, location) as VCCodeFunction;
+                    case Holdkind.VCFile:
                         return (data as VCFileCodeModel).AddFunction(Name, functionkind, Type, -1, Access) as VCCodeFunction;
-                    case holdkind.vcnamespace:
+                    case Holdkind.VCNamespace:
                         return (data as VCCodeNamespace).AddFunction(Name, functionkind, Type, -1, Access) as VCCodeFunction;
                     default:
-                        throw new System.Exception("unknown kind");
+                        throw new System.NotSupportedException("unknown kind");
                 }
             }
 
-            public VCCodeClass AddClass(string Name, vsCMAccess Access, object Bases = null, object ImplementedInterfaces = null)
+            public VCCodeStruct AddStruct(string Name, vsCMAccess Access, object Bases = null, object ImplementedInterfaces = null)
             {
                 switch (kind)
                 {
-                    case holdkind.vcclass:
-                        return (data as VCCodeClass).AddClass(Name, -1, Bases, ImplementedInterfaces, Access) as VCCodeClass;
-                    case holdkind.vcfile:
-                        return (data as FileCodeModel).AddClass(Name, -1, Bases, ImplementedInterfaces, Access) as VCCodeClass;
-                    case holdkind.vcnamespace:
-                        return (data as VCCodeNamespace).AddClass(Name, -1, Bases, ImplementedInterfaces, Access) as VCCodeClass;
+                    case Holdkind.VCStruct:
+                    case Holdkind.VCClass:
+                        return (data as VCCodeClass).AddStruct(Name, -1, Bases, ImplementedInterfaces, Access) as VCCodeStruct;
+                    case Holdkind.VCFile:
+                        return (data as FileCodeModel).AddStruct(Name, -1, Bases, ImplementedInterfaces, Access) as VCCodeStruct;
+                    case Holdkind.VCNamespace:
+                        return (data as VCCodeNamespace).AddStruct(Name, -1, Bases, ImplementedInterfaces, Access) as VCCodeStruct;
                     default:
                         throw new System.Exception("unknown kind");
                 }
             }
 
-            /*public CodeElements Classes
-            {
-                get
-                {
-                    switch (kind)
-                    {
-                        case holdkind.vcclass:
-                            return (data as VCCodeClass).Classes;
-                        case holdkind.vcfile:
-                            return (data as VCFileCodeModel).Classes;
-                        case holdkind.vcnamespace:
-                            return (data as VCCodeNamespace).Classes;
-                        default:
-                            throw new System.Exception("unknown kind");
-                    }
-                }
-            }
-
-            public CodeElements Functions
-            {
-                get
-                {
-                    switch (kind)
-                    {
-                        case holdkind.vcclass:
-                            return (data as VCCodeClass).Functions;
-                        case holdkind.vcfile:
-                            return (data as VCFileCodeModel).Functions;
-                        case holdkind.vcnamespace:
-                            return (data as VCCodeNamespace).Functions;
-                        default:
-                            throw new System.Exception("unknown kind");
-                    }
-                }
-            }
-
-
-            public object Name
-            {
-                get
-                {
-                    switch (kind)
-                    {
-                        case holdkind.vcclass:
-                            return (data as VCCodeClass).Name;
-                        case holdkind.vcfile:
-                            return (data as VCFileCodeModel).Parent.Name;
-                        case holdkind.vcnamespace:
-                            return (data as VCCodeNamespace).Name;
-                        default:
-                            throw new System.Exception("unknown kind");
-                    }
-                }
-            }*/
-
             internal VCCodeClass getClass()
             {
-                System.Diagnostics.Debug.Assert(kind == holdkind.vcclass);
+                System.Diagnostics.Debug.Assert(kind == Holdkind.VCClass);
                 return data as VCCodeClass;
             }
 
             internal VCCodeElement addInclude(VCCodeInclude vCCodeInclude)
             {
-                System.Diagnostics.Debug.Assert(kind == holdkind.vcfile);
+                System.Diagnostics.Debug.Assert(kind == Holdkind.VCFile);
                 return (VCCodeElement)(data as VCFileCodeModel).AddInclude(vCCodeInclude.DisplayName);
             }
 
             internal VCCodeElement addMacro(VCCodeMacro macro)
             {
-                System.Diagnostics.Debug.Assert(kind == holdkind.vcfile);
+                System.Diagnostics.Debug.Assert(kind == Holdkind.VCFile);
                 string smacro = macro.StartPoint.CreateEditPoint().GetText(macro.EndPoint); 
                 String value = smacro.Substring(macro.Name.Count() + "#define  ".Count()) + "\n";
                 return (VCCodeElement)(data as VCFileCodeModel).AddMacro(macro.Name, value, -1);
+            }
+
+            public VCCodeClass AddClass(VCCodeClass cs)
+            {
+                EnvDTE.vsCMAccess Access = vsCMAccess.vsCMAccessPrivate;
+
+                object interfaces = cs.ImplementedInterfaces.Count > 0 ? cs.ImplementedInterfaces : null;
+
+                switch (kind)
+                {
+                    case Holdkind.VCClass:
+                        return (data as VCCodeClass).AddClass(cs.Name, -1, null, interfaces, Access) as VCCodeClass;
+                    case Holdkind.VCFile:
+                        return (data as VCFileCodeModel).AddClass(cs.Name, -1, null, interfaces, Access) as VCCodeClass;
+                    case Holdkind.VCNamespace:
+                        return (data as VCCodeNamespace).AddClass(cs.Name, -1, null, interfaces, Access) as VCCodeClass;
+                    default:
+                        throw new System.Exception("unknown kind");
+                }
             }
         }
     }

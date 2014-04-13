@@ -6,7 +6,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Cycles.converting
+namespace Cycles.Converting
 {
     class uhsconverter
     {
@@ -21,24 +21,26 @@ namespace Cycles.converting
                 case vsCMElement.vsCMElementFunction:
                     VCCodeFunction func = elem as VCCodeFunction;
                     newelem = headertarget.AddFunction(func.Name, func.FunctionKind, func.Type, func.Access, sourcetarget.Name) as VCCodeElement;
-                    (newelem as VCCodeFunction).BodyText = func.BodyText;
+                    VCCodeFunction newFunc = newelem as VCCodeFunction;
+                    //tryWhileFail.execute(() =>
+                    { (newelem as VCCodeFunction).BodyText = func.BodyText; }
+                    //);
                     foreach (VCCodeAttribute attrib in func.Attributes)
-                        (newelem as VCCodeFunction).AddAttribute(attrib.Name, attrib.Value);
+                        newFunc.AddAttribute(attrib.Name, attrib.Value);
                     foreach (VCCodeParameter param in func.Parameters)
-                        (newelem as VCCodeFunction).AddParameter(param.Name, param.Type,-1);
-                    if (headertarget.kind != CodeHolder.holdkind.vcclass)
+                        newFunc.AddParameter(param.Name, param.Type, -1);
+                    if (headertarget.kind != CodeHolder.Holdkind.VCClass 
+                        && headertarget.kind != CodeHolder.Holdkind.VCStruct)
                     {
-                        ImplementationMover.moveImplementation(newelem as VCCodeFunction, sourcetarget);
+                            ImplementationMover.moveImplementation(newFunc, sourcetarget);
                     }
 
                     break;
 
                 case vsCMElement.vsCMElementClass:
                     VCCodeClass cs = elem as VCCodeClass;
-                    newelem = headertarget.AddClass(cs.Name, vsCMAccess.vsCMAccessPrivate, null, cs.ImplementedInterfaces.Count > 0 ? cs.ImplementedInterfaces : null) as VCCodeElement;
-
+                    newelem = headertarget.AddClass(cs) as VCCodeElement;
                     break;
-
                 case vsCMElement.vsCMElementNamespace:
                     VCCodeNamespace ns = elem as VCCodeNamespace;
 
@@ -49,7 +51,7 @@ namespace Cycles.converting
                     VCCodeVariable v = elem as VCCodeVariable;
                     VCCodeVariable headerVar = headertarget.AddVariable(v.Name, v.Type, v.Access, sourcetarget.Name, v.IsShared, v.IsConstant);
                     //v2.InitExpression = v.InitExpression;
-                    if (headertarget.kind == CodeHolder.holdkind.vcfile)
+                    if (headertarget.kind == CodeHolder.Holdkind.VCFile)
                     {
                         VCCodeVariable sourceVar = (sourcetarget.FileCodeModel as VCFileCodeModel).AddVariable(v.Name, v.Type, -1, v.Access) as VCCodeVariable;
                         ImplementationMover.addExtern((VCCodeElement)headerVar);
@@ -77,9 +79,14 @@ namespace Cycles.converting
                 case vsCMElement.vsCMElementEnum:
                     newelem = (VCCodeElement)headertarget.AddEnum(elem as VCCodeEnum);
                     break;
+                case vsCMElement.vsCMElementStruct:
+
+                    VCCodeStruct cstruct = elem as VCCodeStruct;
+                    newelem = headertarget.AddStruct(cstruct.Name, vsCMAccess.vsCMAccessPrivate, null, cstruct.ImplementedInterfaces.Count > 0 ? cstruct.ImplementedInterfaces : null) as VCCodeElement;
+                    break;
                 default:
                     System.Diagnostics.Debug.WriteLine(elem.Kind.ToString());
-                    throw new System.Exception("U need to handle dis one David" + elem.Kind.ToString());
+                    throw new System.NotImplementedException("U need to handle dis one David" + elem.Kind.ToString());
             }
 
 

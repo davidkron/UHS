@@ -7,7 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Cycles.converting
+namespace Cycles.Converting
 {
     class ImplementationMover
     {
@@ -48,13 +48,9 @@ namespace Cycles.converting
                 sourcefunction.BodyText = content;
             });
 
-            EditPoint implementation = start.CreateEditPoint();
-            implementation.Delete(end);
-            implementation.Insert(";");
-
-            string uhs = oldfunc.ProjectItem.Name;
-            string header = uhs.Remove(uhs.Length - 2) + ".h";
-            //(source.FileCodeModel as VCFileCodeModel).AddInclude(header);
+            EditPoint headerImplementation = start.CreateEditPoint();
+            headerImplementation.Delete(end);
+            headerImplementation.Insert(";");
         }
 
         public static void addExtern(VCCodeElement elem)

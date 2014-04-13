@@ -9,9 +9,9 @@ namespace Cycles
     class tryWhileFail
     {
         public delegate void Del();
-        const int MAXTRIES = 20;
+        const int MAXTRIES = 4;
 
-        public static void execute(Del function)
+        public static void execute(Del function,bool thrw = true)
         {
             bool failed = true;
             int tries = 0;
@@ -26,7 +26,13 @@ namespace Cycles
                 catch (System.Exception e)
                 {
                     if (tries >= MAXTRIES)
-                        throw;
+                    {
+                        if (thrw)
+                            throw;
+                        else
+                            return;
+                    }
+                    System.Diagnostics.Debug.WriteLine("EXCEPTION ROOF");
                     System.Diagnostics.Debug.WriteLine(e);
                 }
             }

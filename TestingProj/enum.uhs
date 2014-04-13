@@ -17,5 +17,5 @@ class class0{
 	class0(){
 		myCount = count::two;
 	}
-}
+};
 

@@ -50,5 +50,17 @@ namespace Tests
         {
             test("classes.uhs");
         }
+
+        [TestMethod]
+        public void Structs()
+        {
+            test("structs.uhs");
+        }
+
+        [TestMethod]
+        public void Keywords()
+        {
+            test("keywords.uhs");
+        }
     }
 }
