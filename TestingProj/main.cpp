@@ -1,6 +1,8 @@
-#include "mess.h"
+
+#include "main.h"
 int main()
 {
-	boo::messier();
-	messy();
+	PRINTHELLO;
+	std::cin.get();
+	return 0;
 }

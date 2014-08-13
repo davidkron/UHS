@@ -1,3 +1,4 @@
+#pragma once
 
 enum count
 {
@@ -8,17 +9,28 @@ enum count
 	one
 };
 
-enum counts
+namespace multiple
 {
-	fives = 5,
-	fours = 4,
-	threes = 3,
-	twos = 2,
-	ones = 1
-};
+
+	enum counts
+	{
+		fives = 5,
+		fours = 4,
+		threes = 3,
+		twos = 2,
+		ones = 1
+	};
+}
 
 class class0
 {
 	count myCount;
 	class0();
+
+	enum classenum
+	{
+		yayayay,
+		yayay,
+		yay
+	};
 };

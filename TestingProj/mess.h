@@ -1,19 +1,21 @@
-int global;
-const int fynal;
+#pragma once
+extern int global;
+extern const int fynal;
 
 void messy();
+
+class lol
+{
+};
 
 namespace boo
 {
 
-	void messier()
-	{
-		::messy();
-		::messy();
-	}
+	void messier();
 
-	int calc()
+	int calc();
+
+	class urg
 	{
-		return fynal + 1;
-	}
+	};
 }

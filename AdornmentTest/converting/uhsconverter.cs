@@ -1,4 +1,5 @@
-﻿using EnvDTE;
+﻿using Cycles.Converting.interfaces;
+using EnvDTE;
 using Microsoft.VisualStudio.VCCodeModel;
 using System;
 using System.Collections.Generic;
@@ -20,7 +21,7 @@ namespace Cycles.Converting
             {
                 case vsCMElement.vsCMElementFunction:
                     VCCodeFunction func = elem as VCCodeFunction;
-                    newelem = headertarget.AddFunction(func.Name, func.FunctionKind, func.Type, func.Access, sourcetarget.Name) as VCCodeElement;
+                    newelem = headertarget.add(func);//.AddFunction(func.Name, func.FunctionKind, func.Type, func.Access, sourcetarget.Name) as VCCodeElement;
                     VCCodeFunction newFunc = newelem as VCCodeFunction;
                     //tryWhileFail.execute(() =>
                     { (newelem as VCCodeFunction).BodyText = func.BodyText; }
@@ -29,8 +30,8 @@ namespace Cycles.Converting
                         newFunc.AddAttribute(attrib.Name, attrib.Value);
                     foreach (VCCodeParameter param in func.Parameters)
                         newFunc.AddParameter(param.Name, param.Type, -1);
-                    if (headertarget.kind != CodeHolder.Holdkind.VCClass 
-                        && headertarget.kind != CodeHolder.Holdkind.VCStruct)
+                    if (! (headertarget is ClassInterface)
+                        && !(headertarget is StructInterface))//TODO: Not needed as long as struct derives class
                     {
                             ImplementationMover.moveImplementation(newFunc, sourcetarget);
                     }
@@ -39,19 +40,17 @@ namespace Cycles.Converting
 
                 case vsCMElement.vsCMElementClass:
                     VCCodeClass cs = elem as VCCodeClass;
-                    newelem = headertarget.AddClass(cs) as VCCodeElement;
+                    newelem = headertarget.add(cs) as VCCodeElement;
                     break;
                 case vsCMElement.vsCMElementNamespace:
-                    VCCodeNamespace ns = elem as VCCodeNamespace;
-
-                    newelem = headertarget.AddNamespace(ns.Name) as VCCodeElement;
+                    newelem = headertarget.add(elem as VCCodeNamespace) as VCCodeElement;
                     break;
 
                 case vsCMElement.vsCMElementVariable:
                     VCCodeVariable v = elem as VCCodeVariable;
-                    VCCodeVariable headerVar = headertarget.AddVariable(v.Name, v.Type, v.Access, sourcetarget.Name, v.IsShared, v.IsConstant);
+                    VCCodeVariable headerVar = headertarget.add(v) as VCCodeVariable;//(v.Name, v.Type, v.Access, sourcetarget.Name, v.IsShared, v.IsConstant);
                     //v2.InitExpression = v.InitExpression;
-                    if (headertarget.kind == CodeHolder.Holdkind.VCFile)
+                    if (headertarget is FileInterface)
                     {
                         VCCodeVariable sourceVar = (sourcetarget.FileCodeModel as VCFileCodeModel).AddVariable(v.Name, v.Type, -1, v.Access) as VCCodeVariable;
                         ImplementationMover.addExtern((VCCodeElement)headerVar);
@@ -68,21 +67,21 @@ namespace Cycles.Converting
                     System.Diagnostics.Debug.Write(elem.Kind);
                     VCCodeBase _base = elem as VCCodeBase;
                     System.Diagnostics.Debug.Write(_base.Access);
-                    headertarget.getClass().AddBase(_base.DisplayName, -1);
+                    (headertarget as ClassInterface).vcInterface.AddBase(_base.DisplayName, -1);
                     break;
                 case vsCMElement.vsCMElementIncludeStmt:
-                    newelem = headertarget.addInclude(elem as VCCodeInclude);
+                    newelem = headertarget.add(elem as VCCodeInclude);//addInclude(elem as VCCodeInclude);
                     break;
                 case vsCMElement.vsCMElementMacro:
-                    newelem = headertarget.addMacro(elem as VCCodeMacro);
+                    newelem = headertarget.add(elem as VCCodeMacro);//addMacro(elem as VCCodeMacro);
                     break;
                 case vsCMElement.vsCMElementEnum:
-                    newelem = (VCCodeElement)headertarget.AddEnum(elem as VCCodeEnum);
+                    newelem = (VCCodeElement)headertarget.add(elem as VCCodeEnum);
                     break;
                 case vsCMElement.vsCMElementStruct:
 
                     VCCodeStruct cstruct = elem as VCCodeStruct;
-                    newelem = headertarget.AddStruct(cstruct.Name, vsCMAccess.vsCMAccessPrivate, null, cstruct.ImplementedInterfaces.Count > 0 ? cstruct.ImplementedInterfaces : null) as VCCodeElement;
+                    newelem = headertarget.add(elem as VCCodeStruct);//AddStruct(cstruct.Name, vsCMAccess.vsCMAccessPrivate, null, cstruct.ImplementedInterfaces.Count > 0 ? cstruct.ImplementedInterfaces : null) as VCCodeElement;
                     break;
                 default:
                     System.Diagnostics.Debug.WriteLine(elem.Kind.ToString());
@@ -100,7 +99,7 @@ namespace Cycles.Converting
                 VCCodeElement el = num.Current as VCCodeElement;
                 if (newelem.Kind != vsCMElement.vsCMElementFunction &&
                     newelem.Kind != vsCMElement.vsCMElementEnum)
-                    parseitem(el, sourcetarget, new CodeHolder(newelem));
+                    parseitem(el, sourcetarget, CodeHolder.newHolder(newelem, sourcetarget.Name));// new CodeHolder(newelem));
                 System.Diagnostics.Debug.WriteLine(el.Name + " " + el.Kind);
             }
         }

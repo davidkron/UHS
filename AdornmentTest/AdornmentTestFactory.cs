@@ -1,10 +1,10 @@
-﻿using System.ComponentModel.Composition;
-using Microsoft.VisualStudio.Text.Editor;
+﻿using Microsoft.VisualStudio.Text.Editor;
 using Microsoft.VisualStudio.Utilities;
 using Microsoft.VisualStudio.Text;
 using EnvDTE;
 using EnvDTE80;
 using Microsoft.VisualStudio.Shell;
+using System.ComponentModel.Composition;
 
 [assembly: System.CLSCompliant(true)]
 namespace Cycles

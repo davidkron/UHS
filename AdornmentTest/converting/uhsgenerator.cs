@@ -9,6 +9,7 @@ using Microsoft.VisualStudio.VCCodeModel;
 using Microsoft.VisualStudio.VCProjectEngine;
 using Cycles;
 using Cycles.Converting;
+using Cycles.Converting.interfaces;
 
 namespace Cycles
 {
@@ -78,7 +79,7 @@ namespace Cycles
             while (num.MoveNext())
             {
                 VCCodeElement el = num.Current as VCCodeElement;
-                uhsconverter.parseitem(el, source, new CodeHolder(header.FileCodeModel as VCFileCodeModel));
+                uhsconverter.parseitem(el, source, CodeHolder.newHolder(header.FileCodeModel as VCFileCodeModel));
             }
 
             vcheader.StartPoint.CreateEditPoint().Insert("#pragma once\r\n");

@@ -3,16 +3,15 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-
-    using EnvDTE;
-    using Microsoft.VisualStudio.VCCodeModel;
+using EnvDTE;
+using Microsoft.VisualStudio.VCCodeModel;
 using EnvDTE80;
 using Cycles.Converting;
 
 
     namespace Cycles.Converting
     {
-        public class CodeHolder
+        public class CodeHolder3
         {
             object data;
 
@@ -25,13 +24,13 @@ using Cycles.Converting;
 
             public Holdkind kind;
 
-            public CodeHolder(VCFileCodeModel VCFile)
+            public CodeHolder3(VCFileCodeModel VCFile)
             {
                 kind = Holdkind.VCFile;
                 data = VCFile;
             }
 
-            public CodeHolder(VCCodeElement NewElem)
+            public CodeHolder3(VCCodeElement NewElem)
             {
                 data = NewElem;
                 switch (NewElem.Kind)
@@ -53,25 +52,10 @@ using Cycles.Converting;
                 }
             }
 
-            public VCCodeNamespace AddNamespace(string name)
-            {
-                switch (kind)
-                {
-                    case Holdkind.VCClass:
-                        throw new System.ArgumentException("Class cant contain namespace");
-                    case Holdkind.VCFile:
-                        return (data as VCFileCodeModel).AddNamespace(name, -1) as VCCodeNamespace;
-                    case Holdkind.VCNamespace:
-                        return (data as VCCodeNamespace).AddNamespace(name, -1) as VCCodeNamespace;
-                    default:
-                        throw new System.NotImplementedException("unknown kind");
-                }
-            }
-
 
             public VCCodeEnum AddEnum(VCCodeEnum oldEnum)
             {
-                VCCodeEnum enm;
+                VCCodeEnum enm = null;
                 switch (kind)
                 {
                     case Holdkind.VCStruct:
@@ -81,7 +65,6 @@ using Cycles.Converting;
                         enm = (data as VCCodeClass).AddEnum(oldEnum.Name, -1, oldEnum.Bases, oldEnum.Access) as VCCodeEnum;
                         break;
                     case Holdkind.VCFile:
-                        enm = (data as VCFileCodeModel).AddEnum(oldEnum.Name, -1, oldEnum.Bases, oldEnum.Access) as VCCodeEnum;
                         break;
                     case Holdkind.VCNamespace:
                         enm = (data as VCCodeNamespace).AddEnum(oldEnum.Name, -1, oldEnum.Bases, oldEnum.Access) as VCCodeEnum;
@@ -104,9 +87,6 @@ using Cycles.Converting;
                 VCCodeVariable var;
                 switch (kind)
                 {
-                    case Holdkind.VCClass:
-                        var = (data as VCCodeClass).AddVariable(Name, Type, -1, Access, Location) as VCCodeVariable;
-                        break;
                     case Holdkind.VCFile:
                         var = (data as VCFileCodeModel).AddVariable(Name, Type, -1, Access) as VCCodeVariable;
                         break;
@@ -132,7 +112,6 @@ using Cycles.Converting;
                         functionkind &= ~vsCMFunction.vsCMFunctionInline;
                         return (data as VCCodeStruct).AddFunction(Name, functionkind, Type, -1, Access, location) as VCCodeFunction;
                     case Holdkind.VCFile:
-                        return (data as VCFileCodeModel).AddFunction(Name, functionkind, Type, -1, Access) as VCCodeFunction;
                     case Holdkind.VCNamespace:
                         return (data as VCCodeNamespace).AddFunction(Name, functionkind, Type, -1, Access) as VCCodeFunction;
                     default:
@@ -146,7 +125,6 @@ using Cycles.Converting;
                 {
                     case Holdkind.VCStruct:
                     case Holdkind.VCClass:
-                        return (data as VCCodeClass).AddStruct(Name, -1, Bases, ImplementedInterfaces, Access) as VCCodeStruct;
                     case Holdkind.VCFile:
                         return (data as FileCodeModel).AddStruct(Name, -1, Bases, ImplementedInterfaces, Access) as VCCodeStruct;
                     case Holdkind.VCNamespace:
@@ -154,26 +132,6 @@ using Cycles.Converting;
                     default:
                         throw new System.Exception("unknown kind");
                 }
-            }
-
-            internal VCCodeClass getClass()
-            {
-                System.Diagnostics.Debug.Assert(kind == Holdkind.VCClass);
-                return data as VCCodeClass;
-            }
-
-            internal VCCodeElement addInclude(VCCodeInclude vCCodeInclude)
-            {
-                System.Diagnostics.Debug.Assert(kind == Holdkind.VCFile);
-                return (VCCodeElement)(data as VCFileCodeModel).AddInclude(vCCodeInclude.DisplayName);
-            }
-
-            internal VCCodeElement addMacro(VCCodeMacro macro)
-            {
-                System.Diagnostics.Debug.Assert(kind == Holdkind.VCFile);
-                string smacro = macro.StartPoint.CreateEditPoint().GetText(macro.EndPoint); 
-                String value = smacro.Substring(macro.Name.Count() + "#define  ".Count()) + "\n";
-                return (VCCodeElement)(data as VCFileCodeModel).AddMacro(macro.Name, value, -1);
             }
 
             public VCCodeClass AddClass(VCCodeClass cs)

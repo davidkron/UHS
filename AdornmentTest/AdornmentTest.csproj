@@ -92,9 +92,15 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="AdornmentTestFactory.cs" />
-    <Compile Include="converting\CodeHolder.cs" />
-    <Compile Include="converting\ImplementationMover.cs" />
-    <Compile Include="converting\uhsconverter.cs" />
+    <Compile Include="Converting\CodeHolder.cs" />
+    <Compile Include="Converting\interfaces\addable.cs" />
+    <Compile Include="Converting\interfaces\NamespaceInterface.cs" />
+    <Compile Include="Converting\interfaces\ClassInterface.cs" />
+    <Compile Include="Converting\interfaces\CodeHolder2.cs" />
+    <Compile Include="Converting\interfaces\FileInterface.cs" />
+    <Compile Include="Converting\ImplementationMover.cs" />
+    <Compile Include="Converting\interfaces\StructInterface.cs" />
+    <Compile Include="Converting\uhsconverter.cs" />
     <Compile Include="ProjectHolder.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="DocumentHook.cs" />
@@ -104,8 +110,8 @@
       <DependentUpon>Settings.settings</DependentUpon>
     </Compile>
     <Compile Include="tryWhileFail.cs" />
-    <Compile Include="converting\UHSFile.cs" />
-    <Compile Include="converting\uhsgenerator.cs" />
+    <Compile Include="Converting\UHSFile.cs" />
+    <Compile Include="Converting\uhsgenerator.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config" />
