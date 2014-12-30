@@ -2,7 +2,6 @@
 #include "main.h"
 int main()
 {
-	PRINTHELLO;
-	std::cin.get();
-	return 0;
+int a = 1;
+return a;
 }

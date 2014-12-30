@@ -8,7 +8,7 @@ class lol
 {
 };
 
-namespace boo
+namespace name_space
 {
 
 	void messier();

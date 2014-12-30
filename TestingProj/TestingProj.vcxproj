@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<Project DefaultTargets="Build" ToolsVersion="12.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+<Project DefaultTargets="Build" ToolsVersion="14.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup Label="ProjectConfigurations">
     <ProjectConfiguration Include="Debug|Win32">
       <Configuration>Debug</Configuration>
@@ -19,13 +19,13 @@
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
     <ConfigurationType>Application</ConfigurationType>
     <UseDebugLibraries>true</UseDebugLibraries>
-    <PlatformToolset>v120</PlatformToolset>
+    <PlatformToolset>v140</PlatformToolset>
     <CharacterSet>Unicode</CharacterSet>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
     <ConfigurationType>Application</ConfigurationType>
     <UseDebugLibraries>false</UseDebugLibraries>
-    <PlatformToolset>v120</PlatformToolset>
+    <PlatformToolset>v140</PlatformToolset>
     <WholeProgramOptimization>true</WholeProgramOptimization>
     <CharacterSet>Unicode</CharacterSet>
   </PropertyGroup>
@@ -82,6 +82,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <None Include="bracemacro.uhs" />
     <None Include="classes.uhs" />
     <None Include="enum.uhs" />
     <None Include="keywords.uhs" />
@@ -89,9 +90,11 @@
     <None Include="mess.uhs" />
     <None Include="namespace.uhs" />
     <None Include="structs.uhs" />
+    <None Include="templates.uhs" />
     <None Include="test.uhs" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="bracemacro.h" />
     <ClInclude Include="classes.h" />
     <ClInclude Include="enum.h" />
     <ClInclude Include="keywords.h" />
@@ -99,9 +102,11 @@
     <ClInclude Include="mess.h" />
     <ClInclude Include="namespace.h" />
     <ClInclude Include="structs.h" />
+    <ClInclude Include="templates.h" />
     <ClInclude Include="test.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="bracemacro.cpp" />
     <ClCompile Include="classes.cpp" />
     <ClCompile Include="enum.cpp" />
     <ClCompile Include="keywords.cpp" />
@@ -109,6 +114,7 @@
     <ClCompile Include="mess.cpp" />
     <ClCompile Include="namespace.cpp" />
     <ClCompile Include="structs.cpp" />
+    <ClCompile Include="templates.cpp" />
     <ClCompile Include="test.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

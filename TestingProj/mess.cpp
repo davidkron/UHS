@@ -7,13 +7,13 @@ void messy()
 
 }
 
-void boo::messier()
+void name_space::messier()
 {
-	::messy();
-	::messy();
+::messy();
+::messy();
 }
 
-int boo::calc()
+int name_space::calc()
 {
-	return fynal + 1;
+return fynal + 1;
 }

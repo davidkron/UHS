@@ -67,13 +67,13 @@
     </Otherwise>
   </Choose>
   <ItemGroup>
-    <Compile Include="UnitTest1.cs" />
+    <Compile Include="UnitTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\AdornmentTest\AdornmentTest.csproj">
-      <Project>{9b119ecb-2346-4fe7-bb12-15fd6aacc803}</Project>
-      <Name>AdornmentTest</Name>
+    <ProjectReference Include="..\UHSAdorment\UHSAdorment.csproj">
+      <Project>{ea3df662-e925-483b-8662-b22fe9f95a77}</Project>
+      <Name>UHSAdorment</Name>
     </ProjectReference>
   </ItemGroup>
   <Choose>

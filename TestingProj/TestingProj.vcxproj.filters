@@ -42,6 +42,12 @@
     <ClInclude Include="structs.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="templates.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="bracemacro.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="test.cpp">
@@ -68,6 +74,12 @@
     <ClCompile Include="structs.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="templates.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="bracemacro.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <None Include="test.uhs">
@@ -92,6 +104,12 @@
       <Filter>Unified Files</Filter>
     </None>
     <None Include="structs.uhs">
+      <Filter>Unified Files</Filter>
+    </None>
+    <None Include="templates.uhs">
+      <Filter>Unified Files</Filter>
+    </None>
+    <None Include="bracemacro.uhs">
       <Filter>Unified Files</Filter>
     </None>
   </ItemGroup>

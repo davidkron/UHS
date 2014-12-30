@@ -1,5 +1,12 @@
 struct st{
-	void foo(){
+	int ii = 10;
+	virtual void foo(){
 		int a = 100;
+	}
+};
+
+struct st2 : private st{
+	void foo(){
+		ii = 100;
 	}
 };

@@ -6,7 +6,7 @@ class a{
 		}
 	};
 
-	class d : b{
+	struct d : b{
 		void lol()
 		{
 			b u;
