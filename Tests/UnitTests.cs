@@ -7,80 +7,71 @@ namespace Tests
     [TestClass]
     public class UnitTests
     {
-        public void test(String fname)
-        {
-            EnvDTE.DTE dte2 = (EnvDTE.DTE)System.Runtime.InteropServices.Marshal.
-                
-            GetActiveObject("VisualStudio.DTE.14.0");
-            UHSFile uhs = new UHSFile("C:\\Users\\David\\Desktop\\UHSAdorment\\TestingProj\\" + fname,
-                    "TestingProj", dte2);
-            uhs.parse();
-        }
 
         [TestMethod]
         public void TestMethod1()
         {
-            test("test.uhs");
+            TestingFramework.test("test");
         }
 
         [TestMethod]
         public void TestEnum()
         {
-            test("enum.uhs");
+            TestingFramework.test("enum");
         }
 
         [TestMethod]
         public void TestMess()
         {
-            test("mess.uhs");
+            TestingFramework.test("mess");
         }
 
         [TestMethod]
         public void NamespaceTest()
         {
-            test("namespace.uhs");
+            TestingFramework.test("namespace");
         }
 
         [TestMethod]
         public void MainTest()
         {
-            test("main.uhs");
+            TestingFramework.test("main");
         }
 
         [TestMethod]
         public void Classtest()
         {
-            test("classes.uhs");
+            TestingFramework.test("classes");
         }
 
         [TestMethod]
         public void Structs()
         {
-            test("structs.uhs");
+            TestingFramework.test("structs");
         }
 
         [TestMethod]
         public void Keywords()
         {
-            test("keywords.uhs");
+            TestingFramework.test("keywords");
         }
 
         [TestMethod]
         public void Templates()
         {
-            test("templates.uhs");
+            TestingFramework.test("templates");
         }
 
         [TestMethod]
         public void BraceMacro()
         {
-            test("bracemacro.uhs");
+            TestingFramework.test("bracemacro");
         }
 
         [TestMethod]
         public void TestInclude()
         {
-            test("include.uhs");
+            TestingFramework.test("include");
         }
     }
 }

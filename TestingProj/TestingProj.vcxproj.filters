@@ -16,6 +16,15 @@
     <Filter Include="Unified Files">
       <UniqueIdentifier>{e9e4e536-88dc-4e43-82b0-b88696521fe8}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Compare Files">
+      <UniqueIdentifier>{fae64ada-83af-4d88-bdcb-d2523fa556f5}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Compare Files\Source Files">
+      <UniqueIdentifier>{e5c902b9-2991-4949-ac6d-9ec7b18a5605}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Compare Files\Header FIles">
+      <UniqueIdentifier>{5de3a656-12ce-4bf4-871f-7cda99cde3ad}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="test.h">
@@ -121,5 +130,10 @@
     <None Include="include.uhs">
       <Filter>Unified Files</Filter>
     </None>
+  </ItemGroup>
+  <ItemGroup>
+    <Text Include="Compare Files\classes.h">
+      <Filter>Compare Files\Header FIles</Filter>
+    </Text>
   </ItemGroup>
 </Project>
