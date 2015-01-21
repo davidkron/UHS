@@ -9,6 +9,7 @@ namespace Cycles
     using System;
     using EnvDTE;
     using Microsoft.VisualStudio.VCProjectEngine;
+    using Cycles.Utils;
     
     public class ProjectHolder
     {

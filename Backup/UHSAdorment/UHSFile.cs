@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 namespace Cycles
 {
     using Microsoft.VisualStudio.Text;
-using Microsoft.VisualStudio.VCProjectEngine;
+    using Microsoft.VisualStudio.VCProjectEngine;
 
     public class UHSFile
     {
@@ -20,17 +20,17 @@ using Microsoft.VisualStudio.VCProjectEngine;
         VCFile source;
         VCFile uhs;
 
-        public UHSFile(String filePath,string projectname, EnvDTE.DTE dte)
+        public UHSFile(String filePath, string projectname, EnvDTE.DTE dte)
         {
             project = new ProjectHolder((EnvDTE80.DTE2)dte, projectname);
             generator = new UHSGenerator(project);
             load(filePath);
         }
-        
-        public UHSFile(ITextDocument doc,EnvDTE.DTE dte)
+
+        public UHSFile(ITextDocument doc, EnvDTE.DTE dte)
         {
             project = new ProjectHolder((EnvDTE80.DTE2)dte);
-            
+
             generator = new UHSGenerator(project);
             load(doc.FilePath);
         }
@@ -38,14 +38,9 @@ using Microsoft.VisualStudio.VCProjectEngine;
         public void parse()
         {
             if (!generator.converting)
-            //try
             {
                 generator.convert(uhs);
             }
-            /*catch(Exception e)
-            {
-                generator.converting = false;
-            }*/
         }
 
         public void load(string filename)

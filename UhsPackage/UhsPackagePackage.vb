@@ -43,20 +43,18 @@ Public NotInheritable Class UhsPackagePackage
     ' Overridden Package Implementation
 #Region "Package Members"
 
-
     Protected Sub RegisterUhsFiletype()
         If UserRegistryRoot IsNot Nothing Then
-            Dim filexts = UserRegistryRoot.OpenSubKey("FileExtensionMapping", True)
+            Dim filexts = UserRegistryRoot.CreateSubKey("FileExtensionMapping")
             Dim UhsKey = filexts.OpenSubKey("uhs", False)
-
             If UhsKey Is Nothing Then
-                UhsKey = filexts.CreateSubKey("uhs")
-                UhsKey.SetValue(Nothing, "{8B382828-6202-11D1-8870-0000F87579D2}")
-                UhsKey.SetValue("LogViewID", "{B2F072B0-ABC1-11D0-9D62-00C04FD9DFD9}")
-                UhsKey.Close()
+                    UhsKey = filexts.CreateSubKey("uhs")
+                    UhsKey.SetValue(Nothing, "{8B382828-6202-11D1-8870-0000F87579D2}")
+                    UhsKey.SetValue("LogViewID", "{B2F072B0-ABC1-11D0-9D62-00C04FD9DFD9}")
+                    UhsKey.Close()
+                End If
+                filexts.Close()
             End If
-            filexts.Close()
-        End If
     End Sub
 
 

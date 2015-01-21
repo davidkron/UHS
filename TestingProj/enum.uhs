@@ -9,7 +9,7 @@ namespace multiple{
 };
 
 class class0{
-	[[deprecated]]
+
 	enum classenum{
 		yay,yayay,yayayay
 	};

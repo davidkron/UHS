@@ -5,12 +5,6 @@
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">12.0</VisualStudioVersion>
     <VSToolsPath Condition="'$(VSToolsPath)' == ''">$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)</VSToolsPath>
   </PropertyGroup>
-  <PropertyGroup>
-    <SignAssembly>true</SignAssembly>
-  </PropertyGroup>
-  <PropertyGroup>
-    <AssemblyOriginatorKeyFile>UHS Generator.snk</AssemblyOriginatorKeyFile>
-  </PropertyGroup>
   <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
@@ -18,11 +12,11 @@
     <ProductVersion>10.0.20305</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
     <ProjectTypeGuids>{82b43b9b-a64c-4715-b499-d71e9ca2bd60};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
-    <ProjectGuid>{9B119ECB-2346-4FE7-BB12-15FD6AACC803}</ProjectGuid>
+    <ProjectGuid>{EA3DF662-E925-483B-8662-B22FE9F95A77}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>Cycles</RootNamespace>
-    <AssemblyName>AdornmentTest</AssemblyName>
+    <RootNamespace>UHSAdorment</RootNamespace>
+    <AssemblyName>UHSAdorment</AssemblyName>
     <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <GeneratePkgDefFile>false</GeneratePkgDefFile>
@@ -35,9 +29,6 @@
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
-    <UseVSHostingProcess>true</UseVSHostingProcess>
-    <CopyVsixExtensionFiles>False</CopyVsixExtensionFiles>
-    <CodeAnalysisRuleSet>AllRules.ruleset</CodeAnalysisRuleSet>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>pdbonly</DebugType>
@@ -51,19 +42,11 @@
     <Reference Include="envdte, Version=8.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
       <EmbedInteropTypes>True</EmbedInteropTypes>
     </Reference>
-    <Reference Include="envdte100, Version=10.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
-      <EmbedInteropTypes>True</EmbedInteropTypes>
-    </Reference>
     <Reference Include="envdte80, Version=8.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
       <EmbedInteropTypes>True</EmbedInteropTypes>
     </Reference>
-    <Reference Include="envdte90, Version=9.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
-      <EmbedInteropTypes>True</EmbedInteropTypes>
-    </Reference>
-    <Reference Include="envdte90a, Version=9.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
-      <EmbedInteropTypes>True</EmbedInteropTypes>
-    </Reference>
     <Reference Include="Microsoft.VisualStudio.CoreUtility" />
+    <Reference Include="Microsoft.VisualStudio.Shell.12.0, Version=12.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL" />
     <Reference Include="Microsoft.VisualStudio.Shell.Immutable.10.0, Version=10.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL" />
     <Reference Include="Microsoft.VisualStudio.Text.Data" />
     <Reference Include="Microsoft.VisualStudio.Text.Logic" />
@@ -91,39 +74,33 @@
     <Reference Include="WindowsBase" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="AdornmentTestFactory.cs" />
+    <Compile Include="Converting\Class1.cs" />
+    <Compile Include="Converting\CloneUtils\ImplementationMover.cs" />
+    <Compile Include="Converting\CloneUtils\TemplateCloner.cs" />
     <Compile Include="Converting\CodeHolder.cs" />
-    <Compile Include="Converting\interfaces\addable.cs" />
-    <Compile Include="Converting\interfaces\NamespaceInterface.cs" />
-    <Compile Include="Converting\interfaces\ClassInterface.cs" />
-    <Compile Include="Converting\interfaces\CodeHolder2.cs" />
-    <Compile Include="Converting\interfaces\FileInterface.cs" />
-    <Compile Include="Converting\ImplementationMover.cs" />
-    <Compile Include="Converting\interfaces\StructInterface.cs" />
-    <Compile Include="Converting\uhsconverter.cs" />
+    <Compile Include="Converting\CodeHolders\ClassHolder.cs" />
+    <Compile Include="Converting\CodeHolders\EnumHolder.cs" />
+    <Compile Include="Converting\CodeHolders\NamespaceHolder.cs" />
+    <Compile Include="Converting\CodeHolders\FileHolder.cs" />
+    <Compile Include="Converting\CodeHolders\FunctionHolder.cs" />
+    <Compile Include="Converting\GenericVCInterface.cs" />
+    <Compile Include="Converting\UHSConverter.cs" />
+    <Compile Include="IDE hook\UHSAdormentFactory.cs" />
     <Compile Include="ProjectHolder.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="DocumentHook.cs" />
-    <Compile Include="Properties\Settings.Designer.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTimeSharedInput>True</DesignTimeSharedInput>
-      <DependentUpon>Settings.settings</DependentUpon>
-    </Compile>
-    <Compile Include="tryWhileFail.cs" />
-    <Compile Include="Converting\UHSFile.cs" />
-    <Compile Include="Converting\uhsgenerator.cs" />
+    <Compile Include="IDE hook\DocumentHook.cs" />
+    <Compile Include="UHSFile.cs" />
+    <Compile Include="UHSGenerator.cs" />
+    <Compile Include="Exceptions\UHSNotCppException.cs" />
+    <Compile Include="Utils\Addable.cs" />
+    <Compile Include="Utils\tryWhileFail.cs" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="app.config" />
-    <None Include="Properties\Settings.settings">
-      <Generator>SettingsSingleFileGenerator</Generator>
-      <LastGenOutput>Settings.Designer.cs</LastGenOutput>
-    </None>
     <None Include="source.extension.vsixmanifest">
       <SubType>Designer</SubType>
     </None>
-    <None Include="UHS Generator.snk" />
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Import Project="$(VSToolsPath)\VSSDK\Microsoft.VsSDK.targets" Condition="'$(VSToolsPath)' != ''" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

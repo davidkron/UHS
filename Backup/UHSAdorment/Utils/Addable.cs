@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Cycles.Converting.interfaces
+namespace Cycles.Utils
 {
 
     interface Addable<T>

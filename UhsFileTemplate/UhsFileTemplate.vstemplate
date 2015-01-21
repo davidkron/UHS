@@ -1,0 +1,21 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<VSTemplate Version="3.0.0" Type="Item" xmlns="http://schemas.microsoft.com/developer/vstemplate/2005" xmlns:sdk="http://schemas.microsoft.com/developer/vstemplate-sdkextension/2010">
+  <TemplateData>
+    <Name>UhsFileTemplate</Name>
+    <Description>UhsFileTemplate</Description>
+    <Icon>UhsFileTemplate.ico</Icon>
+    <TemplateID>d151e41f-4119-43dc-aa67-62f72c8f7946</TemplateID>
+    <ProjectType>VC</ProjectType>
+    <RequiredFrameworkVersion>2.0</RequiredFrameworkVersion>
+    <NumberOfParentCategoriesToRollUp>1</NumberOfParentCategoriesToRollUp>
+    <DefaultName>uhsfile.uhs</DefaultName>
+  </TemplateData>
+  <TemplateContent>
+    <References>
+      <Reference>
+        <Assembly>System</Assembly>
+      </Reference>
+    </References>
+    <ProjectItem ReplaceParameters="true">uhsfile.uhs</ProjectItem>
+  </TemplateContent>
+</VSTemplate>

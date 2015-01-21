@@ -14,28 +14,24 @@ namespace Cycles
     ///</summary>+        
     public class DocumentHook
     {
-        //IAdornmentLayer _layer;
-        //IWpfTextView _view;
         UHSFile uhs;
         bool changed = true;//Allways allow one first save without changing the doc
 
-        public DocumentHook(IWpfTextView view,ITextDocument doc,EnvDTE.DTE dte)
+        public DocumentHook(IWpfTextView view, ITextDocument doc, EnvDTE.DTE dte)
         {
-           // _view = view;
             ITextBuffer buffer = view.TextBuffer;
-            //_layer = view.GetAdornmentLayer("Cycles");
-            uhs = new UHSFile(doc,dte);
+            uhs = new UHSFile(doc, dte);
             buffer.Changed += buffer_Changed;
             doc.FileActionOccurred += doc_FileActionOccurred;
         }
 
         void doc_FileActionOccurred(object sender, TextDocumentFileActionEventArgs e)
         {
-           if( e.FileActionType == FileActionTypes.ContentSavedToDisk && changed)
-           {
-               uhs.parse();
-               changed = false;
-           }
+            if (e.FileActionType == FileActionTypes.ContentSavedToDisk && changed)
+            {
+                uhs.parse();
+                changed = false;
+            }
         }
 
         void buffer_Changed(object sender, TextContentChangedEventArgs e)

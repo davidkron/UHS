@@ -7,12 +7,18 @@ using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Cycles.Utils;
+using UHSAdorment.Converting;
 
-namespace Cycles.Converting.interfaces
+namespace Cycles.Converting.CodeHolders
 {
     public class CodeHolder
     {
         public System.Type holdingType;
+
+        public CodeHolder()
+        {
+        }
 
         public CodeHolder(System.Type holdingType)
         {
@@ -33,18 +39,20 @@ namespace Cycles.Converting.interfaces
             else throw new NotImplementedException("Cant add \"" + typeof(T) + "\" to a " + holdingType);
         }
 
-        public static CodeHolder newHolder(VCCodeElement NewElem,string sourcetarget)
+        public static CodeHolder newHolder(VCCodeElement NewElem, string sourcetarget)
         {
             switch (NewElem.Kind)
             {
                 case vsCMElement.vsCMElementClass:
-                    return new ClassInterface(NewElem as VCCodeClass, sourcetarget);
+                    return new ClassHolder(NewElem as VCCodeClass, sourcetarget);
                 case vsCMElement.vsCMElementStruct:
-                    return new StructInterface(NewElem as VCCodeStruct, sourcetarget);
+                    return new ClassHolder(NewElem as VCCodeStruct, sourcetarget);
                 case vsCMElement.vsCMElementNamespace:
-                    return new NamespaceInterface(NewElem as VCCodeNamespace, sourcetarget);
+                    return new NamespaceHolder(NewElem as VCCodeNamespace);
                 case vsCMElement.vsCMElementFunction:
-                    return null;
+                    return new FunctionHolder(NewElem as VCCodeFunction);
+                case vsCMElement.vsCMElementEnum:
+                    return new EnumHolder(NewElem as VCCodeEnum, sourcetarget);
                 default:
                     throw new System.ArgumentException("invalid type of parent: " + (NewElem as VCCodeElement).Kind);
             }
@@ -52,31 +60,20 @@ namespace Cycles.Converting.interfaces
 
         public static CodeHolder newHolder(VCFileCodeModel NewElem)
         {
-            return new FileInterface(NewElem);
-        }
-
-        public static CodeHolder newHolder(VCCodeClass NewElem,string sourcetarget)
-        {
-            return new ClassInterface(NewElem, sourcetarget);
-        }
-
-        public static CodeHolder newHolder(VCCodeNamespace NewElem, string sourcetarget)
-        {
-            return new NamespaceInterface(NewElem, sourcetarget);
+            return new FileHolder(NewElem);
         }
     };
 
-    public class CodeHolder2<holdType> : CodeHolder where holdType : class
+    public class SpecificHolder<holdType> : CodeHolder where holdType : class
     {
         public holdType vcInterface;
-        private VCCodeStruct st;
-        public CodeHolder2(holdType data)
+        public SpecificHolder(holdType data)
             : base(typeof(holdType))
         {
             vcInterface = data;
         }
 
-        public CodeHolder2(VCCodeElement data)
+        public SpecificHolder(VCCodeElement data)
             : base(typeof(holdType))
         {
             vcInterface = data as holdType;

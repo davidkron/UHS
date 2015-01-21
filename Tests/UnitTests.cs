@@ -76,5 +76,11 @@ namespace Tests
         {
             test("bracemacro.uhs");
         }
+
+        [TestMethod]
+        public void TestInclude()
+        {
+            test("include.uhs");
+        }
     }
 }

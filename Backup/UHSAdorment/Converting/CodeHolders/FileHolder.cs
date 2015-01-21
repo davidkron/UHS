@@ -35,14 +35,6 @@ namespace Cycles.Converting
 
         public VCCodeInclude add(VCCodeInclude vCCodeInclude)
         {
-            TextPoint End = vCCodeInclude.EndPoint;
-            var endEdit = End.CreateEditPoint();
-            endEdit.CharLeft();
-
-            if (endEdit.GetText(End) == ">"){
-                return vcInterface.AddInclude("<" + vCCodeInclude.FullName + ">");
-            }
-
             return vcInterface.AddInclude(vCCodeInclude.DisplayName);
         }
 

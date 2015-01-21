@@ -28,9 +28,11 @@ namespace Cycles
         [Name("Cycles")]
         [Order(After = PredefinedAdornmentLayers.Selection, Before = PredefinedAdornmentLayers.Text)]
         public AdornmentLayerDefinition editorAdornmentLayer = null;
-        [Import]internal ITextDocumentFactoryService TextDocumentFactoryService { get; set; }
+        [Import]
+        internal ITextDocumentFactoryService TextDocumentFactoryService { get; set; }
 
-        [Import]internal SVsServiceProvider ServiceProvider = null;
+        [Import]
+        internal SVsServiceProvider ServiceProvider = null;
 
         /// <summary>
         /// Instantiates a Cycles manager when a textView is created.
@@ -42,10 +44,10 @@ namespace Cycles
             if (TextDocumentFactoryService.TryGetTextDocument(textView.TextDataModel.DocumentBuffer, out document))
             {
                 System.Diagnostics.Debug.WriteLine(document.FilePath);
-                if(document.FilePath.EndsWith("uhs",System.StringComparison.OrdinalIgnoreCase))
+                if (document.FilePath.EndsWith("uhs", System.StringComparison.OrdinalIgnoreCase))
                 {
                     DTE dte = (DTE)ServiceProvider.GetService(typeof(DTE));
-                    new DocumentHook(textView,document,dte);
+                    new DocumentHook(textView, document, dte);
                 }
             }
         }

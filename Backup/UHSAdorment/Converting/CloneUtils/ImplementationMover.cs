@@ -1,17 +1,12 @@
-﻿using EnvDTE;
+﻿using Cycles.Utils;
+using EnvDTE;
 using Microsoft.VisualStudio.VCCodeModel;
-using Microsoft.VisualStudio.VCProjectEngine;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
-namespace Cycles.Converting
+namespace Cycles.Converting.CloneUtils
 {
-    class ImplementationMover
+    internal class ImplementationMover
     {
-        public static void moveImplementation(VCCodeFunction oldfunc, ProjectItem source, VCCodeElement parent = null)
+        public static void moveImplementation(VCCodeFunction oldfunc, ProjectItem source)
         {
             TextPoint start = null, end = null, namestart = null;
 
@@ -24,15 +19,8 @@ namespace Cycles.Converting
             });
 
             string content = oldfunc.BodyText;
-            VCCodeFunction sourcefunction = null;
-            
-            if (oldfunc.FunctionKind.HasFlag(vsCMFunction.vsCMFunctionConstructor) && parent != null && parent.Kind == vsCMElement.vsCMElementClass)
-            {
-                sourcefunction = (parent as VCCodeClass).AddFunction(oldfunc.Name, vsCMFunction.vsCMFunctionConstructor, null, -1, oldfunc.Access, source.Name) as VCCodeFunction;
-            }
-            else
-                sourcefunction = (source.FileCodeModel as VCFileCodeModel).AddFunction(oldfunc.FullName, oldfunc.FunctionKind, oldfunc.Type, -1, oldfunc.Access) as VCCodeFunction;
-            
+            VCCodeFunction sourcefunction = (source.FileCodeModel as VCFileCodeModel).AddFunction(oldfunc.FullName, oldfunc.FunctionKind, oldfunc.Type, -1, oldfunc.Access) as VCCodeFunction;
+
             foreach (VCCodeParameter param in oldfunc.Parameters)
             {
                 sourcefunction.AddParameter(param.Name, param.Type, -1);
@@ -55,7 +43,7 @@ namespace Cycles.Converting
 
         public static void addExtern(VCCodeElement elem)
         {
-                elem.GetStartPoint().CreateEditPoint().Insert("extern ");
+            elem.GetStartPoint().CreateEditPoint().Insert("extern ");
         }
 
         public static void moveImplementation(VCCodeVariable v, ProjectItem sourcetarget)

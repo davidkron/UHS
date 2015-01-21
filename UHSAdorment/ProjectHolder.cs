@@ -8,29 +8,30 @@
     public class ProjectHolder
     {
         public EnvDTE.Project dteproj;
-        public VCProject proj;
+        public VCProject vcProj;
         public VCFilter headers;
         public VCFilter sources;
         public VCFilter unifiles;
 
-	    public ProjectHolder(EnvDTE80.DTE2 enviro)
+
+	    public ProjectHolder(EnvDTE.DTE enviro)
 	    {
-            EnvDTE.Project proj = null;
             tryWhileFail.execute(() =>
             {
-                proj = (EnvDTE.Project)enviro.ActiveSolutionProjects[0];
+                dteproj = enviro.ActiveDocument.ProjectItem.ContainingProject;
+                vcProj = (VCProject)dteproj.Object;
             });
-            load(proj);
+            load();
 	    }
 
-        internal void load(EnvDTE.Project dteproj)
+        internal void load()
         {
             headers = findFilter("Header Files");
             sources = findFilter("Source Files");
             unifiles = findFilter("Unified Files");
             if (unifiles == null)
             {
-                unifiles = proj.AddFilter("Unified Files");
+                unifiles = vcProj.AddFilter("Unified Files");
             }
         }
         public ProjectHolder(EnvDTE80.DTE2 enviro,String projectname)
@@ -39,19 +40,19 @@
             {
                 tryWhileFail.execute(() =>
                 {
-                    foreach (Project project in enviro.GetObject("VCProjects"))
+                    foreach (Project project in enviro.Solution.Projects)//GetObject("VCProjects"))
                     {
                         if (project.Name == projectname)
                         {
                             this.dteproj = project;
-                            proj = (VCProject)project.Object;
+                            vcProj = (VCProject)project.Object;
                             break;
                         }
                     }
                 });
             }
 
-            load(dteproj);
+            load();
         }
         public VCFilter findFilter(String fname, VCFilter filter = null)
         {
@@ -59,7 +60,7 @@
 
             if (filter == null)
             {
-                filters = proj.Filters;
+                filters = vcProj.Filters;
             }
             else
             {
@@ -84,8 +85,8 @@
 
             if (filter == null)
             {
-                files = proj.Files;
-                filters = proj.Filters;
+                files = vcProj.Files;
+                filters = vcProj.Filters;
             }
             else
             {

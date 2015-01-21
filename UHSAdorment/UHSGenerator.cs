@@ -18,10 +18,6 @@ namespace Cycles
     {
         public ProjectHolder project;
         public bool converting = false;
-        public UHSGenerator(EnvDTE.Project project)
-        {
-            this.project = new ProjectHolder((EnvDTE80.DTE2)project);
-        }
 
         public UHSGenerator(ProjectHolder project)
         {
@@ -55,7 +51,7 @@ namespace Cycles
 
             tryWhileFail.execute(() =>
             {
-                project.proj.Save();
+                project.vcProj.Save();
                 project.dteproj.Save();
             }, false);
 

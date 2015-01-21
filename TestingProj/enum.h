@@ -27,7 +27,6 @@ class class0
 count myCount;
 class0();
 
-[export]
 enum classenum
 {
 yayayay,

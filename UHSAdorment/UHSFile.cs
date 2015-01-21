@@ -29,8 +29,7 @@ namespace Cycles
 
         public UHSFile(ITextDocument doc, EnvDTE.DTE dte)
         {
-            project = new ProjectHolder((EnvDTE80.DTE2)dte);
-
+            project = new ProjectHolder(dte);
             generator = new UHSGenerator(project);
             load(doc.FilePath);
         }

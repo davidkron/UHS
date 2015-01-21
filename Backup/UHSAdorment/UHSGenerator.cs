@@ -8,14 +8,14 @@ using EnvDTE;
 using Microsoft.VisualStudio.VCCodeModel;
 using Microsoft.VisualStudio.VCProjectEngine;
 using Cycles;
+using Cycles.Utils;
 using Cycles.Converting;
-using Cycles.Converting.interfaces;
+using Cycles.Converting.CodeHolders;
 
 namespace Cycles
 {
     public class UHSGenerator
     {
-        //intellicon intellisence;
         public ProjectHolder project;
         public bool converting = false;
         public UHSGenerator(EnvDTE.Project project)
@@ -33,7 +33,6 @@ namespace Cycles
             converting = true;
 
             //Create header
-
             VCFile h = project.findHeader(file.FullPath.Split('.')[0] + ".hpp");
             if (h == null)
                 h = project.findHeader(file.FullPath.Split('.')[0] + ".h");
@@ -41,13 +40,11 @@ namespace Cycles
 
             ProjectItem header = h.Object as ProjectItem;
             ProjectItem source = s.Object as ProjectItem;
-            
+
             bool hOpen = header.Document != null;
             bool sOpen = source.Document != null;
-            if(hOpen)    
-                header.Document.Close();
-            if (sOpen)
-                source.Document.Close();
+            if (hOpen) header.Document.Close();
+            if (sOpen) source.Document.Close();
 
             System.IO.File.WriteAllText(h.FullPath, String.Empty);
             (header.FileCodeModel as VCFileCodeModel).Synchronize();
@@ -55,12 +52,13 @@ namespace Cycles
             (source.FileCodeModel as VCFileCodeModel).Synchronize();
             (source.FileCodeModel as VCFileCodeModel).StartPoint.CreateEditPoint().Delete(
                (source.FileCodeModel as VCFileCodeModel).EndPoint);
-            
-            tryWhileFail.execute(()=>{
-            project.proj.Save();
-            project.dteproj.Save();
-            },false);
-            
+
+            tryWhileFail.execute(() =>
+            {
+                project.proj.Save();
+                project.dteproj.Save();
+            }, false);
+
             EnvDTE.ProjectItem uhsfile = file.Object as ProjectItem;
             VCFileCodeModel vcfile = null, vcheader = null, vcsource = null;
             tryWhileFail.execute(() =>
@@ -70,7 +68,12 @@ namespace Cycles
                 vcsource = source.FileCodeModel as VCFileCodeModel;
             });
 
-            
+            if (vcfile == null)
+            {
+                System.Windows.MessageBox.Show("The UHS format needs to be interpreted as C++ code by visual studio. Currently you have to set this manually by going TOOLS->Options->Text Editor->File Extensions and adding the extension uhs using editor C++. The UHS format wont even work partly otherwise.");
+                throw new Exceptions.UHSNotCppException();
+            }
+
             System.Collections.IEnumerator num = null;
             tryWhileFail.execute(() =>
             {
@@ -79,36 +82,30 @@ namespace Cycles
             while (num.MoveNext())
             {
                 VCCodeElement el = num.Current as VCCodeElement;
-                uhsconverter.parseitem(el, source, CodeHolder.newHolder(header.FileCodeModel as VCFileCodeModel));
+                UHSConverter.parseitem(el, source, CodeHolder.newHolder(header.FileCodeModel as VCFileCodeModel));
             }
 
             vcheader.StartPoint.CreateEditPoint().Insert("#pragma once\r\n");
             bool hasHeader = false;
-            foreach(VCCodeInclude inc in vcsource.Includes)
+            foreach (VCCodeInclude inc in vcsource.Includes)
             {
                 if (inc.Name == header.Name)
                 {
                     hasHeader = true; break;
                 }
             }
-            if(!hasHeader)
+            if (!hasHeader)
                 vcsource.AddInclude("\"" + header.Name + "\"");
 
             project.dteproj.Save();
-
-            //tryWhileFail.execute(()=>{
-            //if ((source.FileCodeModel as VCFileCodeModel).Includes.Count == 0)
-            
-                //(source.FileCodeModel as VCFileCodeModel).StartPoint.CreateEditPoint().Insert("#include \"" + header.Name + "\""); 
-            //});
             converting = false;
-            
+
             //Reopen docs
             if (hOpen) header.Open();
             if (sOpen) source.Open();
         }
 
-        
+
     }
 }
 
