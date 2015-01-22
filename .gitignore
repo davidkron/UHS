@@ -15,8 +15,7 @@ bin/
 *.lastbuildstate
 *.dll
 *.vsix
-*.cpp
-*.h
+
 unsuccessfulbuild
 
 # Compiled Object files
