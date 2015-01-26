@@ -59,12 +59,11 @@ namespace Cycles
                 string headerpath = dir + "\\" + rawfname + ".h";
                 string sourcepath = dir + "\\" + rawfname + ".cpp";
 
-
                 if (!System.IO.File.Exists(headerpath))
                 {
                     if (project.headers.CanAddFile(headerpath))
                     {
-                        System.IO.File.CreateText(headerpath);
+                        System.IO.File.WriteAllText(headerpath, "#pragma once\n");
                         header = project.headers.AddFile(headerpath);
                     }
                 }
