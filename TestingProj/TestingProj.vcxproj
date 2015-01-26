@@ -90,6 +90,7 @@
     <None Include="main.uhs" />
     <None Include="mess.uhs" />
     <None Include="namespace.uhs" />
+    <None Include="sample.uhs" />
     <None Include="structs.uhs" />
     <None Include="templates.uhs" />
     <None Include="test.uhs" />
@@ -97,12 +98,14 @@
   <ItemGroup>
     <ClInclude Include="bracemacro.h" />
     <ClInclude Include="classes.h" />
+    <ClInclude Include="Compare Files\test.h" />
     <ClInclude Include="enum.h" />
     <ClInclude Include="include.h" />
     <ClInclude Include="keywords.h" />
     <ClInclude Include="main.h" />
     <ClInclude Include="mess.h" />
     <ClInclude Include="namespace.h" />
+    <ClInclude Include="sample.h" />
     <ClInclude Include="structs.h" />
     <ClInclude Include="templates.h" />
     <ClInclude Include="test.h" />
@@ -116,6 +119,7 @@
     <ClCompile Include="main.cpp" />
     <ClCompile Include="mess.cpp" />
     <ClCompile Include="namespace.cpp" />
+    <ClCompile Include="sample.cpp" />
     <ClCompile Include="structs.cpp" />
     <ClCompile Include="templates.cpp" />
     <ClCompile Include="test.cpp" />

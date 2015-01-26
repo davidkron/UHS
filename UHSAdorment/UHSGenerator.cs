@@ -36,18 +36,11 @@ namespace Cycles
 
             ProjectItem header = h.Object as ProjectItem;
             ProjectItem source = s.Object as ProjectItem;
-
-            bool hOpen = header.Document != null;
-            bool sOpen = source.Document != null;
-            if (hOpen) header.Document.Close();
-            if (sOpen) source.Document.Close();
-
-            System.IO.File.WriteAllText(h.FullPath, String.Empty);
-            (header.FileCodeModel as VCFileCodeModel).Synchronize();
-            System.IO.File.WriteAllText(s.FullPath, String.Empty);
-            (source.FileCodeModel as VCFileCodeModel).Synchronize();
+            
             (source.FileCodeModel as VCFileCodeModel).StartPoint.CreateEditPoint().Delete(
                (source.FileCodeModel as VCFileCodeModel).EndPoint);
+            (header.FileCodeModel as VCFileCodeModel).StartPoint.CreateEditPoint().Delete(
+               (header.FileCodeModel as VCFileCodeModel).EndPoint);
 
             tryWhileFail.execute(() =>
             {
@@ -83,7 +76,6 @@ namespace Cycles
                 UHSConverter.parseitem(el, source, CodeHolder.newHolder(header.FileCodeModel as VCFileCodeModel));
             }
 
-            vcheader.StartPoint.CreateEditPoint().Insert("#pragma once\r\n");
             bool hasHeader = false;
             foreach (VCCodeInclude inc in vcsource.Includes)
             {
@@ -97,10 +89,6 @@ namespace Cycles
 
             project.dteproj.Save();
             converting = false;
-
-            //Reopen docs
-            if (hOpen) header.Open();
-            if (sOpen) source.Open();
         }
 
 

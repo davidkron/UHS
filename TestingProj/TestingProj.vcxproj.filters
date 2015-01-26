@@ -60,6 +60,12 @@
     <ClInclude Include="include.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="Compare Files\test.h">
+      <Filter>Compare Files\Header FIles</Filter>
+    </ClInclude>
+    <ClInclude Include="sample.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="test.cpp">
@@ -95,6 +101,9 @@
     <ClCompile Include="include.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="sample.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <None Include="test.uhs">
@@ -128,6 +137,9 @@
       <Filter>Unified Files</Filter>
     </None>
     <None Include="include.uhs">
+      <Filter>Unified Files</Filter>
+    </None>
+    <None Include="sample.uhs">
       <Filter>Unified Files</Filter>
     </None>
   </ItemGroup>

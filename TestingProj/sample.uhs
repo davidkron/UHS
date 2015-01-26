@@ -1,0 +1,29 @@
+#include <iostream>
+
+#define GREET "Hello UHS!\n"
+
+const float pi = 3.14;
+
+class printer
+{
+public:
+	void greet() {
+		std::cout << GREET;
+	}
+};
+
+int main()
+{
+	printer p;
+	p.greet();
+	std::cout << "Press Enter to continue";
+	std::cin.get();
+}
+
+template <typename T>
+class collection
+{
+	T foo() {
+		return T();
+	}
+};

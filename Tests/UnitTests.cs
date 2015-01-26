@@ -85,10 +85,7 @@ namespace Tests
         [TestMethod]
         public void TestSample()
         {
-            for (int i = 0; i < 5; i++)
-            {
-                TestingFramework.test("test");
-            }
+            TestingFramework.test("sample");
         }
     }
 }

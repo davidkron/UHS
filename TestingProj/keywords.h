@@ -1,4 +1,3 @@
-#pragma once
 extern int boo;
 
 struct obj
