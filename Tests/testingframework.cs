@@ -22,10 +22,20 @@ namespace Tests
                     "TestingProj", dte2);
             uhs.parse();
 
-            String newHeader = System.IO.File.ReadAllText(folder + header);
-            if(System.IO.File.Exists(folder + compareHeader)) { 
-            String oldHeader = System.IO.File.ReadAllText(folder + compareHeader);
+
+            if(System.IO.File.Exists(folder + compareHeader))
+            {
+                String newHeader = System.IO.File.ReadAllText(folder + header);
+                String oldHeader = System.IO.File.ReadAllText(folder + compareHeader);
                     Assert.IsTrue(newHeader.Equals(oldHeader));
+            }
+
+
+            if (System.IO.File.Exists(folder + compareSource))
+            {
+                String newSource = System.IO.File.ReadAllText(folder + source);
+                String oldSource = System.IO.File.ReadAllText(folder + compareSource);
+                Assert.IsTrue(newSource.Equals(oldSource));
             }
         }
     }

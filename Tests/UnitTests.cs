@@ -73,5 +73,22 @@ namespace Tests
         {
             TestingFramework.test("include");
         }
+
+        [TestMethod]
+        public void StressTest()
+        {
+            for(int i = 0; i < 5; i++) { 
+                TestingFramework.test("test");
+            }
+        }
+
+        [TestMethod]
+        public void TestSample()
+        {
+            for (int i = 0; i < 5; i++)
+            {
+                TestingFramework.test("test");
+            }
+        }
     }
 }
