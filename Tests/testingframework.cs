@@ -27,7 +27,7 @@ namespace Tests
             {
                 String newHeader = System.IO.File.ReadAllText(folder + header);
                 String oldHeader = System.IO.File.ReadAllText(folder + compareHeader);
-                    Assert.IsTrue(newHeader.Equals(oldHeader));
+                Assert.AreEqual(newHeader,oldHeader);
             }
 
 
@@ -35,7 +35,7 @@ namespace Tests
             {
                 String newSource = System.IO.File.ReadAllText(folder + source);
                 String oldSource = System.IO.File.ReadAllText(folder + compareSource);
-                Assert.IsTrue(newSource.Equals(oldSource));
+                Assert.AreEqual(newSource,oldSource);
             }
         }
     }
