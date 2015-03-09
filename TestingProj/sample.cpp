@@ -1,4 +1,4 @@
-#include "sample.h"
+#include "sample.hpp"
 const float pi = 3.14;
 
 

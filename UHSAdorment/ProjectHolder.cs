@@ -97,7 +97,9 @@
             foreach(VCFile f in files)
             {
                 if (fname == f.FullPath)
+                {
                     return f;
+                }
             }
 
             foreach (VCFilter f in filters)

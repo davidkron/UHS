@@ -12,8 +12,6 @@ namespace Cycles
 
     public class UHSFile
     {
-        private bool hasfiles = false;
-
         ProjectHolder project;
         UHSGenerator generator;
         VCFile header;
@@ -38,7 +36,7 @@ namespace Cycles
         {
             if (!generator.converting)
             {
-                generator.convert(uhs);
+                generator.convert(uhs,header,source);
             }
         }
 
@@ -49,34 +47,40 @@ namespace Cycles
 
             uhs = project.findFile(filename);
 
-            if (!hasfiles)
+            string filter = (uhs.Parent as VCProjectItem).ItemName;
+            if (filter == "Source Files" || filter == "Header Files")
+                uhs.Move(project.unifiles);
+
+            string headerpath = dir + "\\" + rawfname + ".hpp";
+            string alternativeHeaderPath = dir + "\\" + rawfname + ".h";
+            string sourcepath = dir + "\\" + rawfname + ".cpp";
+
+            /*
+                    FIND IF ALLREADY EXISTS
+            */
+            header = project.findHeader(headerpath);
+            if (header == null) 
+                header = project.findHeader(alternativeHeaderPath);
+            source = project.findSource(sourcepath);
+
+            /*
+                    NOT FOUND - CREATE
+            */
+            if (header == null)
             {
-                string filter = (uhs.Parent as VCProjectItem).ItemName;
-                if (filter == "Source Files" || filter == "Header Files")
-                    uhs.Move(project.unifiles);
+                if (!project.headers.CanAddFile(headerpath))
+                    throw new Exception("Could not add file");
 
-                //AddObjectsFilter(ref currentproject);
-                string headerpath = dir + "\\" + rawfname + ".h";
-                string sourcepath = dir + "\\" + rawfname + ".cpp";
+                System.IO.File.WriteAllText(headerpath, "#pragma once\r\n");
+                header = project.headers.AddFile(headerpath);
+            }
+            if (source == null)
+            {
+                if (!project.sources.CanAddFile(sourcepath))
+                    throw new Exception("Could not add file");
 
-                if (!System.IO.File.Exists(headerpath))
-                {
-                    if (project.headers.CanAddFile(headerpath))
-                    {
-                        System.IO.File.WriteAllText(headerpath, "#pragma once\n");
-                        header = project.headers.AddFile(headerpath);
-                    }
-                }
-                if (!System.IO.File.Exists(sourcepath))
-                {
-                    if (project.sources.CanAddFile(sourcepath))
-                    {
-                        System.IO.File.CreateText(sourcepath);
-                        source = project.sources.AddFile(sourcepath);
-                    }
-                }
-
-                hasfiles = true;
+                    System.IO.File.CreateText(sourcepath);
+                    source = project.sources.AddFile(sourcepath);
             }
         }
     }

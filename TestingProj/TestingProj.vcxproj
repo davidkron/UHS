@@ -96,23 +96,24 @@
     <None Include="test.uhs" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="bracemacro.h" />
-    <ClInclude Include="classes.h" />
+    <ClInclude Include="bracemacro.hpp" />
+    <ClInclude Include="classes.hpp" />
     <ClInclude Include="Compare Files\test.h" />
-    <ClInclude Include="enum.h" />
-    <ClInclude Include="include.h" />
-    <ClInclude Include="keywords.h" />
-    <ClInclude Include="main.h" />
-    <ClInclude Include="mess.h" />
-    <ClInclude Include="namespace.h" />
-    <ClInclude Include="sample.h" />
-    <ClInclude Include="structs.h" />
-    <ClInclude Include="templates.h" />
-    <ClInclude Include="test.h" />
+    <ClInclude Include="enum.hpp" />
+    <ClInclude Include="include.hpp" />
+    <ClInclude Include="keywords.hpp" />
+    <ClInclude Include="main.hpp" />
+    <ClInclude Include="mess.hpp" />
+    <ClInclude Include="namespace.hpp" />
+    <ClInclude Include="sample.hpp" />
+    <ClInclude Include="structs.hpp" />
+    <ClInclude Include="templates.hpp" />
+    <ClInclude Include="test.hpp" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="bracemacro.cpp" />
     <ClCompile Include="classes.cpp" />
+    <ClCompile Include="Compare Files\test.cpp" />
     <ClCompile Include="enum.cpp" />
     <ClCompile Include="include.cpp" />
     <ClCompile Include="keywords.cpp" />

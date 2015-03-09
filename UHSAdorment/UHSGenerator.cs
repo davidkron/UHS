@@ -24,19 +24,14 @@ namespace Cycles
             this.project = project;
         }
 
-        public void convert(VCFile file)
+        public void convert(VCFile file, VCFile h, VCFile s)
         {
             converting = true;
-
-            //Create header
-            VCFile h = project.findHeader(file.FullPath.Split('.')[0] + ".hpp");
-            if (h == null)
-                h = project.findHeader(file.FullPath.Split('.')[0] + ".h");
-            VCFile s = project.findSource(file.FullPath.Split('.')[0] + ".cpp");
 
             ProjectItem header = h.Object as ProjectItem;
             ProjectItem source = s.Object as ProjectItem;
 
+            System.IO.File.WriteAllText(h.FullPath, String.Empty);
             (source.FileCodeModel as VCFileCodeModel).StartPoint.CreateEditPoint().Delete(
                (source.FileCodeModel as VCFileCodeModel).EndPoint);
             (header.FileCodeModel as VCFileCodeModel).StartPoint.CreateEditPoint().Delete(
@@ -65,7 +60,6 @@ namespace Cycles
                 throw new Exceptions.UHSNotCppException();
             }
 
-
             bool recreated = false;
 
             try
@@ -74,7 +68,6 @@ namespace Cycles
             }
             catch (Exception e)
             {
-
                 tryWhileFail.execute(() =>
                 {
                     recreated = true;
@@ -83,7 +76,8 @@ namespace Cycles
                 });
             }
 
-            if(recreated) vcheader.StartPoint.CreateEditPoint().Insert("#pragma once\n");
+            //if(recreated)
+            vcheader.StartPoint.CreateEditPoint().Insert("#pragma once\r\n");
 
             bool hasHeader = false;
             foreach (VCCodeInclude inc in vcsource.Includes)
@@ -102,10 +96,10 @@ namespace Cycles
 
         private static void Generate(ProjectItem header, ProjectItem source, VCFileCodeModel vcfile)
         {
-            System.Diagnostics.Debug.WriteLine("ASDASDASD");
+            System.Diagnostics.Debug.WriteLine("Retrying....");
 
 
-        System.Collections.IEnumerator num = null;
+            System.Collections.IEnumerator num = null;
             tryWhileFail.execute(() =>
             {
                 num = vcfile.CodeElements.GetEnumerator();

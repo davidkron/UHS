@@ -1,2 +1,2 @@
 
-#include "namespace.h"
+#include "namespace.hpp"

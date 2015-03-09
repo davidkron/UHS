@@ -10,7 +10,7 @@ namespace Cycles.Utils
     {
         static int total_retries = 0;
         public delegate void Del();
-        const int MAXTRIES = 4;
+        const int MAXTRIES = 15;
 
         public static void execute(Del function, bool thrw = true)
         {
