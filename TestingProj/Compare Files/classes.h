@@ -1,5 +1,4 @@
 #pragma once
-
 class a
 {
 protected:
@@ -12,3 +11,4 @@ class b :
 {
 void foo();
 };
+

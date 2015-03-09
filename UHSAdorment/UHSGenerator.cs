@@ -36,12 +36,12 @@ namespace Cycles
 
             ProjectItem header = h.Object as ProjectItem;
             ProjectItem source = s.Object as ProjectItem;
-            
+
             (source.FileCodeModel as VCFileCodeModel).StartPoint.CreateEditPoint().Delete(
                (source.FileCodeModel as VCFileCodeModel).EndPoint);
             (header.FileCodeModel as VCFileCodeModel).StartPoint.CreateEditPoint().Delete(
                (header.FileCodeModel as VCFileCodeModel).EndPoint);
-
+               
             tryWhileFail.execute(() =>
             {
                 project.vcProj.Save();
@@ -65,16 +65,25 @@ namespace Cycles
                 throw new Exceptions.UHSNotCppException();
             }
 
-            System.Collections.IEnumerator num = null;
-            tryWhileFail.execute(() =>
+
+            bool recreated = false;
+
+            try
             {
-                num = vcfile.CodeElements.GetEnumerator();
-            });
-            while (num.MoveNext())
-            {
-                VCCodeElement el = num.Current as VCCodeElement;
-                UHSConverter.parseitem(el, source, CodeHolder.newHolder(header.FileCodeModel as VCFileCodeModel));
+                Generate(header, source, vcfile);
             }
+            catch (Exception e)
+            {
+
+                tryWhileFail.execute(() =>
+                {
+                    recreated = true;
+                    System.IO.File.WriteAllText(h.FullPath, String.Empty);
+                    Generate(header, source, vcfile);
+                });
+            }
+
+            if(recreated) vcheader.StartPoint.CreateEditPoint().Insert("#pragma once\n");
 
             bool hasHeader = false;
             foreach (VCCodeInclude inc in vcsource.Includes)
@@ -91,6 +100,22 @@ namespace Cycles
             converting = false;
         }
 
+        private static void Generate(ProjectItem header, ProjectItem source, VCFileCodeModel vcfile)
+        {
+            System.Diagnostics.Debug.WriteLine("ASDASDASD");
+
+
+        System.Collections.IEnumerator num = null;
+            tryWhileFail.execute(() =>
+            {
+                num = vcfile.CodeElements.GetEnumerator();
+            });
+            while (num.MoveNext())
+            {
+                VCCodeElement el = num.Current as VCCodeElement;
+                UHSConverter.parseitem(el, source, CodeHolder.newHolder(header.FileCodeModel as VCFileCodeModel));
+            }
+        }
 
     }
 }

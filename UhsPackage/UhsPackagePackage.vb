@@ -2,6 +2,8 @@
 Imports System.Runtime.InteropServices
 Imports Microsoft.VisualStudio.Shell.Interop
 Imports Microsoft.VisualStudio.Shell
+Imports EnvDTE
+Imports EnvDTE80
 
 ''' <summary>
 ''' This is the class that implements the package exposed by this assembly.
@@ -18,6 +20,8 @@ Imports Microsoft.VisualStudio.Shell
 '
 ' The InstalledProductRegistration attribute is used to register the information needed to show this package
 ' in the Help/About dialog of Visual Studio.
+
+
 
 <ProvideAutoLoad(UIContextGuids.NoSolution)>
 <PackageRegistration(UseManagedResourcesOnly:=True),
@@ -48,14 +52,22 @@ Public NotInheritable Class UhsPackagePackage
             Dim filexts = UserRegistryRoot.CreateSubKey("FileExtensionMapping")
             Dim UhsKey = filexts.OpenSubKey("uhs", False)
             If UhsKey Is Nothing Then
-                    UhsKey = filexts.CreateSubKey("uhs")
-                    UhsKey.SetValue(Nothing, "{8B382828-6202-11D1-8870-0000F87579D2}")
-                    UhsKey.SetValue("LogViewID", "{B2F072B0-ABC1-11D0-9D62-00C04FD9DFD9}")
-                    UhsKey.Close()
-                End If
-                filexts.Close()
+                UhsKey = filexts.CreateSubKey("uhs")
+                UhsKey.SetValue(Nothing, "{8B382828-6202-11D1-8870-0000F87579D2}")
+                UhsKey.SetValue("LogViewID", "{B2F072B0-ABC1-11D0-9D62-00C04FD9DFD9}")
+                UhsKey.Close()
             End If
+            filexts.Close()
+        End If
     End Sub
+
+    Protected Sub SetAutoLoadTrue()
+        Dim DTE As EnvDTE.DTE
+        DTE = CType(System.Runtime.InteropServices.Marshal.GetActiveObject("VisualStudio.DTE.14.0"), DTE)
+        DTE.Properties("Environment", "Documents").Item("DetectFileChangesOutsideIDE").Value = True
+        DTE.Properties("Environment", "Documents").Item("AutoloadExternalChanges").Value = True
+    End Sub
+
 
 
     ''' <summary>
@@ -65,6 +77,7 @@ Public NotInheritable Class UhsPackagePackage
     Protected Overrides Sub Initialize()
         MyBase.Initialize()
         RegisterUhsFiletype()
+        SetAutoLoadTrue()
     End Sub
 #End Region
 

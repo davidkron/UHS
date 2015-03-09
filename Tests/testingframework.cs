@@ -23,11 +23,13 @@ namespace Tests
             uhs.parse();
 
 
-            if(System.IO.File.Exists(folder + compareHeader))
+            String newHeader = System.IO.File.ReadAllText(folder + header);
+            StringAssert.Contains(newHeader, "#pragma once");
+
+            if (System.IO.File.Exists(folder + compareHeader))
             {
-                String newHeader = System.IO.File.ReadAllText(folder + header);
                 String oldHeader = System.IO.File.ReadAllText(folder + compareHeader);
-                Assert.AreEqual(newHeader,oldHeader);
+                Assert.AreEqual(oldHeader, newHeader);
             }
 
 
@@ -35,8 +37,10 @@ namespace Tests
             {
                 String newSource = System.IO.File.ReadAllText(folder + source);
                 String oldSource = System.IO.File.ReadAllText(folder + compareSource);
-                Assert.AreEqual(newSource,oldSource);
+                Assert.AreEqual(oldSource, newSource);
             }
+
+
         }
     }
 }

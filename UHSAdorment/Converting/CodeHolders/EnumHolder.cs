@@ -4,7 +4,7 @@ using EnvDTE;
 using Microsoft.VisualStudio.VCCodeModel;
 using System;
 
-namespace Cycles.Converting
+namespace Cycles.Converting.CodeHolders
 {
     internal class EnumHolder : SpecificHolder<VCCodeEnum>, Addable<VCCodeVariable>, Addable<VCCodeAttribute>
     {

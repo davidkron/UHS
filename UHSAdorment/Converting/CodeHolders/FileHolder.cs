@@ -6,7 +6,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 
-namespace Cycles.Converting
+namespace Cycles.Converting.CodeHolders
 {
     internal class FileHolder : SpecificHolder<VCFileCodeModel>, Addable<VCCodeVariable>
         , Addable<VCCodeNamespace>, Addable<VCCodeClass>, Addable<VCCodeEnum>, Addable<VCCodeMacro>, Addable<VCCodeFunction>, Addable<VCCodeStruct>, Addable<VCCodeInclude>
