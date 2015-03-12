@@ -32,7 +32,7 @@ namespace Cycles
             ProjectItem source = s.Object as ProjectItem;
 
             System.IO.File.WriteAllText(h.FullPath, String.Empty);
-            (source.FileCodeModel as VCFileCodeModel).StartPoint.CreateEditPoint().Delete(
+           (source.FileCodeModel as VCFileCodeModel).StartPoint.CreateEditPoint().Delete(
                (source.FileCodeModel as VCFileCodeModel).EndPoint);
             (header.FileCodeModel as VCFileCodeModel).StartPoint.CreateEditPoint().Delete(
                (header.FileCodeModel as VCFileCodeModel).EndPoint);
@@ -76,8 +76,10 @@ namespace Cycles
                 });
             }
 
-            //if(recreated)
-            vcheader.StartPoint.CreateEditPoint().Insert("#pragma once\r\n");
+            if(!System.IO.File.ReadAllText(h.FullPath).StartsWith("#pragma once"))
+            {
+                vcheader.StartPoint.CreateEditPoint().Insert("#pragma once\r\n");
+            }
 
             bool hasHeader = false;
             foreach (VCCodeInclude inc in vcsource.Includes)

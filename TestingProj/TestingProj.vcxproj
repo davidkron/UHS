@@ -98,7 +98,7 @@
   <ItemGroup>
     <ClInclude Include="bracemacro.hpp" />
     <ClInclude Include="classes.hpp" />
-    <ClInclude Include="Compare Files\test.h" />
+    <ClInclude Include="Compare Files\test.hpp" />
     <ClInclude Include="enum.hpp" />
     <ClInclude Include="include.hpp" />
     <ClInclude Include="keywords.hpp" />
@@ -126,7 +126,7 @@
     <ClCompile Include="test.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <Text Include="Compare Files\classes.h" />
+    <Text Include="Compare Files\classes.hpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

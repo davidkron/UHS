@@ -29,7 +29,10 @@ namespace Tests
                 if (System.IO.File.Exists(header))
                 {
                     String previousHeaderContents = System.IO.File.ReadAllText(header);
-                    StringAssert.Contains(previousHeaderContents, "#pragma once");
+                    if(!previousHeaderContents.Contains("#pragma once"))
+                    {
+                        throw new FormatException("Needs to contain pragma once before ran");
+                    }
                 }
 
                 /*
@@ -43,7 +46,11 @@ namespace Tests
                         The header file should contain #pragma once afer
                 */
                 String newHeader = System.IO.File.ReadAllText(header);
-                StringAssert.Contains(newHeader, "#pragma once");
+
+                if (!newHeader.Contains("#pragma once"))
+                {
+                    throw new FormatException("Needs to contain pragma once after");
+                }
 
                 if (System.IO.File.Exists(compareHeader))
                 {
@@ -58,12 +65,13 @@ namespace Tests
                     Assert.AreEqual(oldSource, newSource);
                 }
             }
-            finally
+            catch(FormatException e)
             {
                 /*
                     Ensure header contains pragma once even after failed conversion
                 */
                 System.IO.File.WriteAllText(header, "#pragma once\r\n");
+                ExceptionDispatchInfo.Capture(e).Throw();
             }
         }
 

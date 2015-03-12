@@ -2,7 +2,7 @@ class a{
 	class b{
 	public :
 		int foo(int i){
-			return i++;
+return i++;
 		}
 	};
 

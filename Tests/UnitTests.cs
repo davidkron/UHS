@@ -1,6 +1,7 @@
 ﻿using Cycles;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
+using System.Threading;
 
 namespace Tests
 {
@@ -79,6 +80,7 @@ namespace Tests
         {
             for(int i = 0; i < 5; i++) { 
                 TestingFramework.test("test");
+                Thread.Sleep(10);
             }
         }
 
