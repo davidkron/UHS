@@ -7,62 +7,81 @@ namespace Tests
 {
     class TestingFramework
     {
+        static String folder = "C:\\Users\\David\\Desktop\\UHSAdorment\\TestingProj\\"
+        static EnvDTE.DTE dte2 = (EnvDTE.DTE)System.Runtime.InteropServices.Marshal.
+        GetActiveObject("VisualStudio.DTE.14.0");
+        
+        class UhsTest{
+            String testPath;
+            String fname;
+            String header;
+            String source;
+            String compareHeader;
+            String compareSource;
+            public String newHeaderContents;
+            public String newSourceContents;
+            public String previousHeaderContents;
+            public String compareHeaderContents;
+            public String compareSourceContents;
+            public bool headerExistedBefore;
+            public bool compareHeaderExists;
+            public bool compareSourceExists;
+            UHSFile uhsFile;
+            
+            public void UhsTest(String testname)
+            {
+                testPath = folder + testname;
+                fname = testPath + ".uhs";
+                header = testPath + ".hpp";
+                source = testPath + ".cpp";
+                compareHeader = folder + "Compare Files\\" + testname + ".hpp";
+                compareSource = folder + "Compare Files\\" + testname + ".cpp";
+                previousHeaderContents = System.IO.File.ReadAllText(header);
+                new UHSFile(fname,"TestingProj", dte2);
+                headerExistedBefore = System.IO.File.Exists(header);
+                compareHeaderExists = System.IO.File.Exists(compareHeader);
+                comparesourceExists = System.IO.File.Exists(compareSource);
+                compareHeaderContents = System.IO.File.ReadAllText(compareHeader);
+                compareSourceContents = System.IO.File.ReadAllText(compareSource);
+            }
+            
+            public void convert()
+            {
+                uhsFile.parse();
+                newHeaderContents = System.IO.File.ReadAllText(header);
+                newSourceContents = System.IO.File.ReadAllText(source);
+            }
+        }
+    
         public static void test(String testname)
         {
-            String folder = "C:\\Users\\David\\Desktop\\UHSAdorment\\TestingProj\\";
-            String testPath = folder + testname;
-            String fname = testPath + ".uhs";
-            String header = testPath + ".hpp";
-            String source = testPath + ".cpp";
-            String compareHeader = folder + "Compare Files\\" + testname + ".hpp";
-            String compareSource = folder + "Compare Files\\" + testname + ".cpp";
-
-            EnvDTE.DTE dte2 = (EnvDTE.DTE)System.Runtime.InteropServices.Marshal.
-            GetActiveObject("VisualStudio.DTE.14.0");
-
+            
+            UhsTest test = new UhsTest(testname);
+        
             try
             {
-
                 /*
                         The header file should contain #pragma once before, if it exists
                 */
-                if (System.IO.File.Exists(header))
+                if (test.headerExistedBefore)
                 {
-                    String previousHeaderContents = System.IO.File.ReadAllText(header);
-                    if(!previousHeaderContents.Contains("#pragma once"))
+                    if(!test.previousHeaderContents.Contains("#pragma once"))
                     {
                         throw new FormatException("Needs to contain pragma once before ran");
                     }
                 }
 
-                /*
-                        Parse
-                */
-                UHSFile uhs = new UHSFile(fname,"TestingProj", dte2);
-                uhs.parse();
+                // PARSE
+                test.parse();
 
-
-                /*
-                        The header file should contain #pragma once afer
-                */
-                String newHeader = System.IO.File.ReadAllText(header);
-
-                if (!newHeader.Contains("#pragma once"))
+                if (test.compareHeaderExists)
                 {
-                    throw new FormatException("Needs to contain pragma once after");
+                    Assert.AreEqual(test.compareHeaderContents, test.headerContents);
                 }
 
-                if (System.IO.File.Exists(compareHeader))
+                if (test.compareSourceExists)
                 {
-                    String oldHeader = System.IO.File.ReadAllText(compareHeader);
-                    Assert.AreEqual(oldHeader, newHeader);
-                }
-
-                if (System.IO.File.Exists(compareSource))
-                {
-                    String newSource = System.IO.File.ReadAllText(source);
-                    String oldSource = System.IO.File.ReadAllText(compareSource);
-                    Assert.AreEqual(oldSource, newSource);
+                    Assert.AreEqual(test.compareSourceContents, test.sourceContents);
                 }
             }
             catch(FormatException e)
@@ -70,15 +89,9 @@ namespace Tests
                 /*
                     Ensure header contains pragma once even after failed conversion
                 */
-                System.IO.File.WriteAllText(header, "#pragma once\r\n");
+                System.IO.File.WriteAllText(test.header, "#pragma once\r\n");
                 ExceptionDispatchInfo.Capture(e).Throw();
             }
-        }
-
-
-        public static void unsafe_test(String testname)
-        {
-
         }
     }
 }

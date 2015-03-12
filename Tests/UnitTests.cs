@@ -13,6 +13,7 @@ namespace Tests
         public void TestMethod1()
         {
             TestingFramework.test("test");
+            
         }
 
         [TestMethod]
