@@ -1,4 +1,5 @@
 #pragma once
+
 class a
 {
 
@@ -14,4 +15,3 @@ class a
 	void lol();
 	};
 };
-

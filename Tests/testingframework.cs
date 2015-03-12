@@ -5,54 +5,59 @@ using System.Runtime.ExceptionServices;
 
 namespace Tests
 {
-    class TestingFramework
+    public class UhsTest
     {
-        static String folder = "C:\\Users\\David\\Desktop\\UHSAdorment\\TestingProj\\"
-        static EnvDTE.DTE dte2 = (EnvDTE.DTE)System.Runtime.InteropServices.Marshal.
-        GetActiveObject("VisualStudio.DTE.14.0");
-        
-        class UhsTest{
-            String testPath;
-            String fname;
-            String header;
-            String source;
-            String compareHeader;
-            String compareSource;
-            public String newHeaderContents;
-            public String newSourceContents;
-            public String previousHeaderContents;
-            public String compareHeaderContents;
-            public String compareSourceContents;
-            public bool headerExistedBefore;
-            public bool compareHeaderExists;
-            public bool compareSourceExists;
-            UHSFile uhsFile;
-            
-            public void UhsTest(String testname)
-            {
-                testPath = folder + testname;
-                fname = testPath + ".uhs";
-                header = testPath + ".hpp";
-                source = testPath + ".cpp";
-                compareHeader = folder + "Compare Files\\" + testname + ".hpp";
-                compareSource = folder + "Compare Files\\" + testname + ".cpp";
-                previousHeaderContents = System.IO.File.ReadAllText(header);
-                new UHSFile(fname,"TestingProj", dte2);
-                headerExistedBefore = System.IO.File.Exists(header);
-                compareHeaderExists = System.IO.File.Exists(compareHeader);
-                comparesourceExists = System.IO.File.Exists(compareSource);
+        static String folder = "C:\\Users\\David\\Desktop\\UHSAdorment\\TestingProj\\";
+
+        String testPath;
+        String fname;
+        public String header;
+        String source;
+        String compareHeader;
+        String compareSource;
+        public String newHeaderContents;
+        public String newSourceContents;
+        public String previousHeaderContents;
+        public String compareHeaderContents;
+        public String compareSourceContents;
+        public bool headerExistedBefore;
+        public bool compareHeaderExists;
+        public bool compareSourceExists;
+        UHSFile uhsFile;
+
+        public UhsTest(String testname)
+        {
+            testPath = folder + testname;
+            fname = testPath + ".uhs";
+            header = testPath + ".hpp";
+            source = testPath + ".cpp";
+            compareHeader = folder + "Compare Files\\" + testname + ".hpp";
+            compareSource = folder + "Compare Files\\" + testname + ".cpp";
+            previousHeaderContents = System.IO.File.ReadAllText(header);
+            EnvDTE.DTE dte2 = (EnvDTE.DTE)System.Runtime.InteropServices.Marshal.
+            GetActiveObject("VisualStudio.DTE.14.0");
+            uhsFile = new UHSFile(fname, "TestingProj", dte2);
+            headerExistedBefore = System.IO.File.Exists(header);
+            compareHeaderExists = System.IO.File.Exists(compareHeader);
+            compareSourceExists = System.IO.File.Exists(compareSource);
+            if(compareHeaderExists)
                 compareHeaderContents = System.IO.File.ReadAllText(compareHeader);
+            if(compareSourceExists)
                 compareSourceContents = System.IO.File.ReadAllText(compareSource);
-            }
-            
-            public void convert()
-            {
-                uhsFile.parse();
-                newHeaderContents = System.IO.File.ReadAllText(header);
-                newSourceContents = System.IO.File.ReadAllText(source);
-            }
         }
-    
+
+        public void convert()
+        {
+            uhsFile.parse();
+            newHeaderContents = System.IO.File.ReadAllText(header);
+            newSourceContents = System.IO.File.ReadAllText(source);
+        }
+    }
+
+
+
+    class TestingFramework
+    {    
         public static void test(String testname)
         {
             
@@ -72,16 +77,16 @@ namespace Tests
                 }
 
                 // PARSE
-                test.parse();
+                test.convert();
 
                 if (test.compareHeaderExists)
                 {
-                    Assert.AreEqual(test.compareHeaderContents, test.headerContents);
+                    Assert.AreEqual(test.compareHeaderContents, test.newHeaderContents);
                 }
 
                 if (test.compareSourceExists)
                 {
-                    Assert.AreEqual(test.compareSourceContents, test.sourceContents);
+                    Assert.AreEqual(test.compareSourceContents, test.newSourceContents);
                 }
             }
             catch(FormatException e)
