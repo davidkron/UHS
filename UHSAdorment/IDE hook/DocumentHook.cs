@@ -23,7 +23,7 @@ namespace Cycles
         {
             ITextBuffer buffer = view.TextBuffer;
             this.dte = dte;
-            uhs = new UHSFile(doc, dte);
+            uhs = new UHSFile(doc.FilePath, dte);
             buffer.Changed += buffer_Changed;
             doc.FileActionOccurred += doc_FileActionOccurred;
         }

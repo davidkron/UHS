@@ -1,10 +1,8 @@
 ﻿using EnvDTE;
 using Microsoft.VisualStudio.VCCodeModel;
 using System;
-using Cycles.Utils;
-using UHSAdorment.Converting;
 
-namespace Cycles.Converting.CodeHolders
+namespace CodeGenerator.Converting.CodeHolders
 {
     public class CodeHolder
     {

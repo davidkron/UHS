@@ -11,7 +11,7 @@ public:
 	void greet();
 };
 
-int main();
+int main2();
 
 template <typename T>
 class collection

@@ -1,10 +1,7 @@
-﻿using Cycles.Converting.CodeHolders;
-using Cycles.Utils;
-using EnvDTE;
-using Microsoft.VisualStudio.VCCodeModel;
+﻿using Microsoft.VisualStudio.VCCodeModel;
 using System;
 
-namespace Cycles.Converting.CodeHolders
+namespace CodeGenerator.Converting.CodeHolders
 {
     internal class EnumHolder : SpecificHolder<VCCodeEnum>, Addable<VCCodeVariable>, Addable<VCCodeAttribute>
     {

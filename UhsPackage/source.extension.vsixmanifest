@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <PackageManifest Version="2.0.0" xmlns="http://schemas.microsoft.com/developer/vsx-schema/2011" xmlns:d="http://schemas.microsoft.com/developer/vsx-schema-design/2011">
   <Metadata>
-    <Identity Id="470d2cfa-f5a5-4792-8b60-7e333060745a" Version="1.0" Language="en-US" Publisher="Cycles" />
+    <Identity Id="470d2cfa-f5a5-4792-8b60-7e333060745a" Version="1.1" Language="en-US" Publisher="Cycles" />
     <DisplayName>UHS - Unified Header Source</DisplayName>
     <Description xml:space="preserve">      Keeps your code in one place!
       - No replication

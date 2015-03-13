@@ -2,9 +2,9 @@
 using System;
 using System.Collections.Generic;
 
-namespace Cycles.Converting.CloneUtils
+namespace CodeGenerator.Converting.CloneUtils
 {
-    internal class TemplateCloner
+    public class TemplateCloner
     {
         public static void CloneTemplates(VCCodeClass from, dynamic to)
         {

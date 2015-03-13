@@ -36,7 +36,7 @@ namespace Tests
             previousHeaderContents = System.IO.File.ReadAllText(header);
             EnvDTE.DTE dte2 = (EnvDTE.DTE)System.Runtime.InteropServices.Marshal.
             GetActiveObject("VisualStudio.DTE.14.0");
-            uhsFile = new UHSFile(fname, "TestingProj", dte2);
+            uhsFile = new UHSFile(fname, dte2, "TestingProj");
             headerExistedBefore = System.IO.File.Exists(header);
             compareHeaderExists = System.IO.File.Exists(compareHeader);
             compareSourceExists = System.IO.File.Exists(compareSource);

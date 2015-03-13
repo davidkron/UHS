@@ -121,28 +121,12 @@
     <Reference Include="WindowsBase" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Converting\Class1.cs" />
-    <Compile Include="Converting\CloneUtils\ImplementationMover.cs" />
-    <Compile Include="Converting\CloneUtils\TemplateCloner.cs" />
-    <Compile Include="Converting\CodeHolder.cs" />
-    <Compile Include="Converting\CodeHolders\ClassHolder.cs" />
-    <Compile Include="Converting\CodeHolders\EnumHolder.cs" />
-    <Compile Include="Converting\CodeHolders\NamespaceHolder.cs" />
-    <Compile Include="Converting\CodeHolders\FileHolder.cs" />
-    <Compile Include="Converting\CodeHolders\FunctionHolder.cs" />
-    <Compile Include="Converting\GenericVCInterface.cs" />
-    <Compile Include="Converting\UHSConverter.cs" />
     <Compile Include="guids.cs" />
     <Compile Include="IDE hook\UHSAdormentFactory.cs" />
-    <Compile Include="IDE hook\UHSParserRegister.cs" />
-    <Compile Include="IDE hook\UHSRegisterPackage.cs" />
     <Compile Include="ProjectHolder.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="IDE hook\DocumentHook.cs" />
     <Compile Include="UHSFile.cs" />
-    <Compile Include="UHSGenerator.cs" />
-    <Compile Include="Exceptions\UHSNotCppException.cs" />
-    <Compile Include="Utils\Addable.cs" />
     <Compile Include="Utils\tryWhileFail.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -161,6 +145,12 @@
       <ProductName>.NET Framework 3.5 SP1</ProductName>
       <Install>false</Install>
     </BootstrapperPackage>
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\CodeGenerator\CodeGenerator.csproj">
+      <Project>{1772904e-6ec9-4255-90de-472c3ea03a44}</Project>
+      <Name>CodeGenerator</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Import Project="$(VSToolsPath)\VSSDK\Microsoft.VsSDK.targets" Condition="'$(VSToolsPath)' != ''" />

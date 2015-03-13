@@ -5,27 +5,31 @@
     using Cycles.Utils;
     using EnvDTE;
 
-    public class ProjectHolder
+    public class UHSProject
     {
-        public EnvDTE.Project dteproj;
+        public Project dteproj;
         public VCProject vcProj;
         public VCFilter headers;
         public VCFilter sources;
         public VCFilter unifiles;
 
-
-	    public ProjectHolder(EnvDTE.DTE enviro)
+	    public UHSProject(EnvDTE.DTE enviro, String projectname = null)
 	    {
-            tryWhileFail.execute(() =>
-            {
-                dteproj = enviro.ActiveDocument.ProjectItem.ContainingProject;
-                vcProj = (VCProject)dteproj.Object;
-            });
-            load();
-	    }
 
-        internal void load()
-        {
+            if (projectname != null)
+            {
+                dteproj = FindProject(enviro, projectname);
+                vcProj = (VCProject)dteproj.Object;
+            }
+            else
+            { 
+                tryWhileFail.execute(() =>
+                {
+                    dteproj = enviro.ActiveDocument.ProjectItem.ContainingProject;
+                    vcProj = (VCProject)dteproj.Object;
+                });
+            }
+
             headers = findFilter("Header Files");
             sources = findFilter("Source Files");
             unifiles = findFilter("Unified Files");
@@ -34,26 +38,29 @@
                 unifiles = vcProj.AddFilter("Unified Files");
             }
         }
-        public ProjectHolder(EnvDTE80.DTE2 enviro,String projectname)
+
+        private EnvDTE.Project FindProject(DTE enviro, string projectname)
         {
-            while (dteproj == null)
+            EnvDTE.Project _dteproj = null;
+            while (_dteproj == null)
             {
                 tryWhileFail.execute(() =>
                 {
-                    foreach (Project project in enviro.Solution.Projects)//GetObject("VCProjects"))
+                    foreach (Project project in enviro.Solution.Projects)
                     {
                         if (project.Name == projectname)
                         {
-                            this.dteproj = project;
-                            vcProj = (VCProject)project.Object;
+                            _dteproj = project;
                             break;
                         }
                     }
                 });
             }
 
-            load();
+            return _dteproj;
         }
+
+
         public VCFilter findFilter(String fname, VCFilter filter = null)
         {
             dynamic filters;

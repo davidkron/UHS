@@ -1,8 +1,7 @@
-﻿using Cycles.Utils;
-using EnvDTE;
+﻿using EnvDTE;
 using Microsoft.VisualStudio.VCCodeModel;
 
-namespace Cycles.Converting.CodeHolders
+namespace CodeGenerator.Converting.CodeHolders
 {
     public class NamespaceHolder : SpecificHolder<VCCodeNamespace>, Addable<VCCodeClass>, Addable<VCCodeEnum>, Addable<VCCodeFunction>
         , Addable<VCCodeStruct>, Addable<VCCodeVariable>, Addable<VCCodeNamespace>

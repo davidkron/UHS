@@ -1,6 +1,6 @@
-﻿using Cycles.Converting.CloneUtils;
-using Cycles.Converting.CodeHolders;
-using Cycles.Utils;
+﻿using CodeGenerator.Converting.CloneUtils;
+using CodeGenerator.Converting.CodeHolders;
+using CodeGenerator.Utils;
 using EnvDTE;
 using Microsoft.VisualStudio.VCCodeModel;
 
@@ -23,8 +23,8 @@ namespace Cycles.Converting
                 case vsCMElement.vsCMElementFunction:
                     VCCodeFunction func = elem as VCCodeFunction;
                     newelem = headertarget.add(func);
-                    
-                    tryWhileFail.execute(()=>{
+
+                    tryWhileFail.execute(() => {
                         functionbody = func.BodyText;
                     });
 

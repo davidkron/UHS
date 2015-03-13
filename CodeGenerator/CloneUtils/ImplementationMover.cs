@@ -1,13 +1,13 @@
-﻿using Cycles.Converting.CodeHolders;
-using Cycles.Utils;
+﻿using CodeGenerator.Converting.CodeHolders;
+using CodeGenerator.Utils;
 using EnvDTE;
 using Microsoft.VisualStudio.VCCodeModel;
 
-namespace Cycles.Converting.CloneUtils
+namespace CodeGenerator.Converting.CloneUtils
 {
     internal class ImplementationMover
     {
-        public static void moveImplementation(VCCodeFunction oldfunc,CodeHolder headertarget, ProjectItem source,string body)
+        public static void moveImplementation(VCCodeFunction oldfunc, CodeHolder headertarget, ProjectItem source, string body)
         {
             TextPoint start = null, end = null, namestart = null;
             body = body.Trim(new char[] { '\t', ' ' });
@@ -16,7 +16,8 @@ namespace Cycles.Converting.CloneUtils
             {
                 //The source function is created by automaticly visual studio
                 oldfunc.BodyText = body;// Doesnt help prettyprinting -> oldfunc.CodeModel.Synchronize();
-            } else
+            }
+            else
             {
                 tryWhileFail.execute(() =>
                 {

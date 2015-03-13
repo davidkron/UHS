@@ -1,4 +1,4 @@
-﻿using Cycles.Converting.CodeHolders;
+﻿using CodeGenerator.Converting.CodeHolders;
 using EnvDTE;
 using Microsoft.VisualStudio.VCCodeModel;
 using System;
@@ -7,7 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace UHSAdorment.Converting
+namespace CodeGenerator.Converting
 {
     public class GenericHolder : CodeHolder
     {
@@ -33,7 +33,7 @@ namespace UHSAdorment.Converting
             return vcInterface.AddEnum(name, -1, bases, vsCMAccess) as VCCodeEnum;
         }
 
-        public VCCodeStruct AddStruct(string name, object bases,object interfaces ,vsCMAccess vsCMAccess)
+        public VCCodeStruct AddStruct(string name, object bases, object interfaces, vsCMAccess vsCMAccess)
         {
             return vcInterface.AddStruct(name, -1, bases, interfaces, vsCMAccess) as VCCodeStruct; ;
         }
@@ -48,9 +48,9 @@ namespace UHSAdorment.Converting
             (vcInterface.ProjectItem.FileCodeModel as VCFileCodeModel).Synchronize();
         }
 
-        public VCCodeBase AddBase(string name,vsCMAccess vsCMAccess)
+        public VCCodeBase AddBase(string name, vsCMAccess vsCMAccess)
         {
-            VCCodeBase _base = vcInterface.AddBase(name,-1) as VCCodeBase;
+            VCCodeBase _base = vcInterface.AddBase(name, -1) as VCCodeBase;
             _base.Access = vsCMAccess;
             return _base;
         }

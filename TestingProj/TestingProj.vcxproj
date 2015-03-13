@@ -84,6 +84,7 @@
   <ItemGroup>
     <None Include="bracemacro.uhs" />
     <None Include="classes.uhs" />
+    <None Include="Compare Files\test.c_cpp" />
     <None Include="enum.uhs" />
     <None Include="include.uhs" />
     <None Include="keywords.uhs" />
@@ -113,7 +114,6 @@
   <ItemGroup>
     <ClCompile Include="bracemacro.cpp" />
     <ClCompile Include="classes.cpp" />
-    <ClCompile Include="Compare Files\test.cpp" />
     <ClCompile Include="enum.cpp" />
     <ClCompile Include="include.cpp" />
     <ClCompile Include="keywords.cpp" />

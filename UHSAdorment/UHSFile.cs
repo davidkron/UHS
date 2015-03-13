@@ -1,35 +1,22 @@
-﻿using Cycles;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System;
 
 namespace Cycles
 {
-    using Microsoft.VisualStudio.Text;
     using Microsoft.VisualStudio.VCProjectEngine;
 
     public class UHSFile
     {
-        ProjectHolder project;
-        UHSGenerator generator;
+        UHSProject project;
+        CodeSplitter generator;
         VCFile header;
         VCFile source;
         VCFile uhs;
 
-        public UHSFile(String filePath, string projectname, EnvDTE.DTE dte)
+        public UHSFile(String filePath, EnvDTE.DTE dte, string projectname = null)
         {
-            project = new ProjectHolder((EnvDTE80.DTE2)dte, projectname);
-            generator = new UHSGenerator(project);
+            project = new UHSProject(dte, projectname);
+            generator = new CodeSplitter(project.dteproj,project.vcProj);
             load(filePath);
-        }
-
-        public UHSFile(ITextDocument doc, EnvDTE.DTE dte)
-        {
-            project = new ProjectHolder(dte);
-            generator = new UHSGenerator(project);
-            load(doc.FilePath);
         }
 
         public void parse()

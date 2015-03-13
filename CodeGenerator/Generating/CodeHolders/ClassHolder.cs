@@ -1,11 +1,10 @@
-﻿using Cycles.Utils;
-using EnvDTE;
+﻿using EnvDTE;
 using Microsoft.VisualStudio.VCCodeModel;
 using System;
-using UHSAdorment.Converting;
 
-namespace Cycles.Converting.CodeHolders
+namespace CodeGenerator.Converting.CodeHolders
 {
+
     public class ClassHolder : GenericHolder, Addable<VCCodeClass>, Addable<VCCodeEnum>, Addable<VCCodeFunction>
         , Addable<VCCodeStruct>,Addable<VCCodeBase>, Addable<VCCodeVariable>
     {

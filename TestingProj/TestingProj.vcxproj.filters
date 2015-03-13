@@ -104,9 +104,6 @@
     <ClCompile Include="sample.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Compare Files\test.cpp">
-      <Filter>Compare Files\Source Files</Filter>
-    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <None Include="test.uhs">
@@ -144,6 +141,9 @@
     </None>
     <None Include="sample.uhs">
       <Filter>Unified Files</Filter>
+    </None>
+    <None Include="Compare Files\test.c_cpp">
+      <Filter>Compare Files\Source Files</Filter>
     </None>
   </ItemGroup>
   <ItemGroup>

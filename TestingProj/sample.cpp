@@ -7,7 +7,7 @@ void printer::greet()
 std::cout << GREET;
 }
 
-int main()
+int main2()
 {
 printer p;
 p.greet();

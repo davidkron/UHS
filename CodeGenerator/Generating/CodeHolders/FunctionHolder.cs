@@ -1,12 +1,6 @@
-﻿using Cycles.Converting.CodeHolders;
-using Cycles.Utils;
-using Microsoft.VisualStudio.VCCodeModel;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
+﻿using Microsoft.VisualStudio.VCCodeModel;
 
-namespace UHSAdorment.Converting
+namespace CodeGenerator.Converting.CodeHolders
 {
     class FunctionHolder : SpecificHolder<VCCodeFunction>, Addable<VCCodeParameter>
     {
