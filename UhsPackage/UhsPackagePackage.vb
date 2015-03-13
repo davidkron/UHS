@@ -64,8 +64,9 @@ Public NotInheritable Class UhsPackagePackage
     Protected Sub SetAutoLoadTrue()
         Dim DTE As EnvDTE.DTE
         DTE = CType(System.Runtime.InteropServices.Marshal.GetActiveObject("VisualStudio.DTE.14.0"), DTE)
-        DTE.Properties("Environment", "Documents").Item("DetectFileChangesOutsideIDE").Value = True
-        DTE.Properties("Environment", "Documents").Item("AutoloadExternalChanges").Value = True
+        Dim p = DTE.Properties("Environment", "Documents")
+        p.Item("DetectFileChangesOutsideIDE").Value = 1
+        p.Item("AutoloadExternalChanges").Value = 1
     End Sub
 
 

@@ -45,6 +45,8 @@ namespace Cycles
                 if (document.FilePath.EndsWith("uhs", System.StringComparison.OrdinalIgnoreCase))
                 {
                     DTE dte = (DTE)ServiceProvider.GetService(typeof(DTE));
+                    dte.Properties["Environment", "Documents"].Item("DetectFileChangesOutsideIDE").Value = 1;
+                    dte.Properties["Environment", "Documents"].Item("AutoloadExternalChanges").Value = 1;
                     new DocumentHook(textView, document, dte);
                 }
             }

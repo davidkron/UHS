@@ -6,6 +6,7 @@ using Microsoft.VisualStudio.Text.Editor;
 using Microsoft.VisualStudio.Text.Formatting;
 using Cycles;
 using Microsoft.VisualStudio.VCProjectEngine;
+using Microsoft.VisualStudio;
 
 namespace Cycles
 {
@@ -15,11 +16,13 @@ namespace Cycles
     public class DocumentHook
     {
         UHSFile uhs;
+        EnvDTE.DTE dte;
         bool changed = true;//Allways allow one first save without changing the doc
 
         public DocumentHook(IWpfTextView view, ITextDocument doc, EnvDTE.DTE dte)
         {
             ITextBuffer buffer = view.TextBuffer;
+            this.dte = dte;
             uhs = new UHSFile(doc, dte);
             buffer.Changed += buffer_Changed;
             doc.FileActionOccurred += doc_FileActionOccurred;
