@@ -13,4 +13,5 @@ printer p;
 p.greet();
 std::cout << "Press Enter to continue";
 std::cin.get();
+return 1;
 }
