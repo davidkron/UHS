@@ -4,5 +4,5 @@
 
 class0::class0()
 {
-myCount = count::two;
+	myCount = count::two;
 }

@@ -3,11 +3,11 @@
 template <typename T>
 class templatedClass
 {
-T templatedMember;
-int nonTemplatedMember = 10;
+	T templatedMember;
+	int nonTemplatedMember = 10;
 
-void foo()
-{
-nonTemplatedMember++;
-}
+	void foo()
+	{
+		nonTemplatedMember++;
+	}
 };

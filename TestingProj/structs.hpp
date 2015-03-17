@@ -2,12 +2,12 @@
 
 struct st
 {
-int ii = 10;
-virtual void foo();
+	int ii = 10;
+	virtual void foo();
 };
 
 struct st2 :
 	private st
 {
-void foo();
+	void foo();
 };

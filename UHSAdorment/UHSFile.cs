@@ -33,7 +33,7 @@ namespace Cycles
             string rawfname = System.IO.Path.GetFileNameWithoutExtension(filename);
 
             uhs = project.findFile(filename);
-
+			if (uhs == null) throw new Exceptions.FileNotInProjectException(filename);
             string filter = (uhs.Parent as VCProjectItem).ItemName;
             if (filter == "Source Files" || filter == "Header Files")
                 uhs.Move(project.unifiles);

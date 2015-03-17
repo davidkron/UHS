@@ -4,11 +4,11 @@
 
 void a::foo()
 {
-haha = 10;
+	haha = 10;
 }
 
 
 void b::foo()
 {
-haha = 20;
+	haha = 20;
 }

@@ -6,12 +6,12 @@ class a
 	class b
 	{
 	public:
-			int foo(int i);
+		int foo(int i);
 	};
 
 	struct d :
-			public b
+		public b
 	{
-	void lol();
+		void lol();
 	};
 };

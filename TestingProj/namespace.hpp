@@ -9,6 +9,6 @@ namespace nspace
 
 	namespace nspace2
 	{
-	int orgh;
+		int orgh;
 	}
 }

@@ -9,11 +9,11 @@ void messy()
 
 void name_space::messier()
 {
-::messy();
-::messy();
+	::messy();
+	::messy();
 }
 
 int name_space::calc()
 {
-return fynal + 1;
+	return fynal + 1;
 }

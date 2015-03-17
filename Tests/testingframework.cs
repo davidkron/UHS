@@ -2,12 +2,13 @@
 using Cycles;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System.Runtime.ExceptionServices;
+using System.IO;
 
 namespace Tests
 {
     public class UhsTest
     {
-        static String folder = "C:\\Users\\David\\Desktop\\UHSAdorment\\TestingProj\\";
+        static String folder;
 
         String testPath;
         String fname;
@@ -25,8 +26,15 @@ namespace Tests
         public bool compareSourceExists;
         UHSFile uhsFile;
 
+		public String getFolder()
+		{
+			DirectoryInfo target = new DirectoryInfo(Directory.GetCurrentDirectory());
+			return target.Parent.Parent.Parent.FullName + "\\TestingProj\\";
+		}
+
         public UhsTest(String testname)
         {
+			folder = getFolder();
             testPath = folder + testname;
             fname = testPath + ".uhs";
             header = testPath + ".hpp";
@@ -36,6 +44,7 @@ namespace Tests
             previousHeaderContents = System.IO.File.ReadAllText(header);
             EnvDTE.DTE dte2 = (EnvDTE.DTE)System.Runtime.InteropServices.Marshal.
             GetActiveObject("VisualStudio.DTE.14.0");
+			Assert.IsNotNull(dte2);
             uhsFile = new UHSFile(fname, dte2, "TestingProj");
             headerExistedBefore = System.IO.File.Exists(header);
             compareHeaderExists = System.IO.File.Exists(compareHeader);

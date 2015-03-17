@@ -19,6 +19,6 @@ class collection
 
 	T foo()
 	{
-return T();
+		return T();
 	}
 };
