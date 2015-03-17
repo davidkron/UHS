@@ -101,10 +101,8 @@ namespace Cycles.Converting
         private static void ParseChildren(VCCodeElement elem, ProjectItem sourcetarget, VCCodeElement newelem)
         {
             System.Collections.IEnumerator num = null;
-            tryWhileFail.execute(() =>
-            {
-                num = elem.Children.GetEnumerator();
-            });
+            
+            num = elem.Children.GetEnumerator();
             var holder = CodeHolder.newHolder(newelem, sourcetarget.Name);
             while (num.MoveNext())
             {
