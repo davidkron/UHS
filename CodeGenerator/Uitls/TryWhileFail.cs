@@ -4,7 +4,7 @@
     {
         static int total_retries = 0;
         public delegate void Del();
-        const int MAXTRIES = 8;
+        const int MAXTRIES = 20;
 
         public static void execute(Del function, bool thrw = true)
         {

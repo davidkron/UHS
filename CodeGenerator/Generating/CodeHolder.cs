@@ -32,9 +32,9 @@ namespace CodeGenerator.Converting.CodeHolders
         }
 
         public static CodeHolder newHolder(VCCodeElement NewElem, string sourcetarget)
-        {
-            switch (NewElem.Kind)
-            {
+		{
+			switch (NewElem.Kind)
+			{
                 case vsCMElement.vsCMElementClass:
                     return new ClassHolder(NewElem as VCCodeClass, sourcetarget);
                 case vsCMElement.vsCMElementStruct:

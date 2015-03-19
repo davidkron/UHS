@@ -66,6 +66,9 @@
     <ClInclude Include="Compare Files\test.hpp">
       <Filter>Compare Files\Header FIles</Filter>
     </ClInclude>
+    <ClInclude Include="testingfile.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="test.cpp">
@@ -102,6 +105,9 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="sample.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="testingfile.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
@@ -144,6 +150,9 @@
     </None>
     <None Include="Compare Files\test.c_cpp">
       <Filter>Compare Files\Source Files</Filter>
+    </None>
+    <None Include="testingfile.uhs">
+      <Filter>Unified Files</Filter>
     </None>
   </ItemGroup>
   <ItemGroup>

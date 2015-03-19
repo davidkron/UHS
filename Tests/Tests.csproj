@@ -51,7 +51,13 @@
     <Reference Include="envdte90a, Version=9.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
       <EmbedInteropTypes>True</EmbedInteropTypes>
     </Reference>
+    <Reference Include="Microsoft.QualityTools.Testing.Fakes, Version=12.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+    </Reference>
     <Reference Include="Microsoft.VisualStudio.Text.Data, Version=12.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL" />
+    <Reference Include="Microsoft.VisualStudio.VCCodeModel, Version=14.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
+      <EmbedInteropTypes>True</EmbedInteropTypes>
+    </Reference>
     <Reference Include="System" />
   </ItemGroup>
   <Choose>
@@ -69,10 +75,15 @@
   <ItemGroup>
     <Compile Include="ContainsPragmaOnce.cs" />
     <Compile Include="testingframework.cs" />
+    <Compile Include="TestMoveFunctionBody.cs" />
     <Compile Include="UnitTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\CodeGenerator\CodeGenerator.csproj">
+      <Project>{1772904e-6ec9-4255-90de-472c3ea03a44}</Project>
+      <Name>CodeGenerator</Name>
+    </ProjectReference>
     <ProjectReference Include="..\UHSAdorment\UHSAdorment.csproj">
       <Project>{ea3df662-e925-483b-8662-b22fe9f95a77}</Project>
       <Name>UHSAdorment</Name>

@@ -55,7 +55,7 @@ namespace Cycles
 
             try
             {
-                Generate(header, source, vcfile);
+                Generate(vcheader, source, vcfile);
             }
             catch (Exception)
             {
@@ -63,7 +63,7 @@ namespace Cycles
                 {
                     System.Diagnostics.Debug.WriteLine("Exception caught, have to reparse....");
                     System.IO.File.WriteAllText(h.FullPath, String.Empty);
-                    Generate(header, source, vcfile);
+                    Generate(vcheader, source, vcfile);
                 });
             }
 
@@ -87,18 +87,10 @@ namespace Cycles
             converting = false;
         }
 
-        private static void Generate(ProjectItem header, ProjectItem source, VCFileCodeModel vcfile)
+        private static void Generate(VCFileCodeModel header, ProjectItem source, VCFileCodeModel vcfile)
         {
-            System.Collections.IEnumerator num = null;
-            tryWhileFail.execute(() =>
-            {
-                num = vcfile.CodeElements.GetEnumerator();
-            });
-            while (num.MoveNext())
-            {
-                VCCodeElement el = num.Current as VCCodeElement;
-                UHSConverter.parseitem(el, source, CodeHolder.newHolder(header.FileCodeModel as VCFileCodeModel));
-            }
+			UHSConverter cloner = new UHSConverter(header, source, vcfile);
+			cloner.CloneElementsFromFile();
         }
 
     }

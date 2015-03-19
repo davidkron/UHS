@@ -95,6 +95,7 @@
     <None Include="structs.uhs" />
     <None Include="templates.uhs" />
     <None Include="test.uhs" />
+    <None Include="testingfile.uhs" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="bracemacro.hpp" />
@@ -110,6 +111,7 @@
     <ClInclude Include="structs.hpp" />
     <ClInclude Include="templates.hpp" />
     <ClInclude Include="test.hpp" />
+    <ClInclude Include="testingfile.hpp" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="bracemacro.cpp" />
@@ -124,6 +126,7 @@
     <ClCompile Include="structs.cpp" />
     <ClCompile Include="templates.cpp" />
     <ClCompile Include="test.cpp" />
+    <ClCompile Include="testingfile.cpp" />
   </ItemGroup>
   <ItemGroup>
     <Text Include="Compare Files\classes.hpp" />

@@ -11,7 +11,7 @@ namespace Tests
         static String folder;
 
         String testPath;
-        String fname;
+        public String uhsfile;
         public String header;
         String source;
         String compareHeader;
@@ -36,20 +36,23 @@ namespace Tests
         {
 			folder = getFolder();
             testPath = folder + testname;
-            fname = testPath + ".uhs";
+			uhsfile = testPath + ".uhs";
             header = testPath + ".hpp";
             source = testPath + ".cpp";
             compareHeader = folder + "Compare Files\\" + testname + ".hpp";
             compareSource = folder + "Compare Files\\" + testname + ".cpp";
-            previousHeaderContents = System.IO.File.ReadAllText(header);
-            EnvDTE.DTE dte2 = (EnvDTE.DTE)System.Runtime.InteropServices.Marshal.
+			EnvDTE.DTE dte2 = (EnvDTE.DTE)System.Runtime.InteropServices.Marshal.
             GetActiveObject("VisualStudio.DTE.14.0");
 			Assert.IsNotNull(dte2);
-            uhsFile = new UHSFile(fname, dte2, "TestingProj");
+            uhsFile = new UHSFile(uhsfile, dte2, "TestingProj");
             headerExistedBefore = System.IO.File.Exists(header);
             compareHeaderExists = System.IO.File.Exists(compareHeader);
             compareSourceExists = System.IO.File.Exists(compareSource);
-            if(compareHeaderExists)
+
+
+			if(headerExistedBefore)
+				previousHeaderContents = System.IO.File.ReadAllText(header);
+			if (compareHeaderExists)
                 compareHeaderContents = System.IO.File.ReadAllText(compareHeader);
             if(compareSourceExists)
                 compareSourceContents = System.IO.File.ReadAllText(compareSource);
@@ -66,8 +69,18 @@ namespace Tests
 
 
     class TestingFramework
-    {    
-        public static void test(String testname)
+    {
+
+		public static void testString(string testString, out string headerContent, out string sourceContent)
+		{
+			UhsTest test = new UhsTest("testingfile");
+			System.IO.File.WriteAllText(test.uhsfile, testString);
+			test.convert();
+			headerContent = test.newHeaderContents;
+			sourceContent = test.newSourceContents;
+        }
+
+        public static void test(string testname)
         {
             
             UhsTest test = new UhsTest(testname);
