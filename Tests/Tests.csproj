@@ -75,8 +75,8 @@
   <ItemGroup>
     <Compile Include="ContainsPragmaOnce.cs" />
     <Compile Include="testingframework.cs" />
-    <Compile Include="TestMoveFunctionBody.cs" />
     <Compile Include="UnitTests.cs" />
+    <Compile Include="IntegrationTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
